@@ -3,7 +3,7 @@
 int main() {
 	int pv_monster;
 	int atk;
-	pv_monster = 100;
+	pv_monster = 1000;
 	atk = 30;
 	printf("pv = %d \n",pv_monster);
 	do {
