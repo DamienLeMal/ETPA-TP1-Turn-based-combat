@@ -11,5 +11,5 @@ int main() {
 		pv_monster = pv_monster - atk;
 		printf("pv = %d \n",pv_monster);
 	}while(pv_monster > 0);
-   return 0;
+  return 0;
 }
