@@ -1,13 +1,15 @@
 #include <stdio.h>
 
 int main() {
-	int pv;
+	int pv_monster;
 	int atk;
-	pv = 100;
+	pv_monster = 1000;
 	atk = 30;
-	printf("pv = %d \n",pv);
-	printf("Le monstre frappe votre dos avec son gros gourdin \n");
-	pv = pv - atk;
-	printf("pv = %d \n",pv);
-   return 0;
+	printf("pv = %d \n",pv_monster);
+	do {
+		printf("Vous frapez le monstre avec votre gros gourdin \n");
+		pv_monster = pv_monster - atk;
+		printf("pv = %d \n",pv_monster);
+	}while(pv_monster > 0);
+  return 0;
 }
