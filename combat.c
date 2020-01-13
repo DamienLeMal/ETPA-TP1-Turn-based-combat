@@ -10,7 +10,8 @@ int main() {
 	atk_monster = 20;
 	pv_monster = 100;
 	atk = 30;
-	pv = 100;
+
+	pv = 100; // on commence exo5
 	printf("pv = %d \n",pv_monster);
 	do {
 		printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n");
