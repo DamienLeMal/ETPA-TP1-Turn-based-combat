@@ -85,12 +85,12 @@ int main() {
     
 	printf("pv = %d \n",pv_m);
 	do {
-		printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Emposonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
+		printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Empoisonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
 		scanf("%d",&choix_p);
 		while (mp_p < 5){
 		    if (choix_p > 2){
 		        printf("--Vous n'avez pas assez de mana");
-		        printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Emposonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
+		        printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Empoisonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
 		        scanf("%d",&choix_p);
 		    }else{
 		        break;
@@ -99,7 +99,7 @@ int main() {
 		while (choix_p == 4){
 		    if (poison_p == 0){
 		        printf("--Vous n'etes pas empoisonne \n");
-		        printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Emposonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
+		        printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Empoisonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
 		        scanf("%d",&choix_p);
 		    }else{
 		        break;
