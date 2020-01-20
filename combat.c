@@ -9,6 +9,15 @@ int poison_m = 0;
 int mp_p = 0;
 int mp_m = 0;
 
+struct Heros {
+    int pv = 0;
+    int mp = 0;
+    int atk = 0;
+    int poison = 0;
+    int this_turn = 0;
+}
+
+
 int choice_p(int choix, int atk) {
     switch (choix){
         case 1 :
@@ -73,7 +82,46 @@ int choice_m(int choix, int atk) {
             break;
     }
 }
+
+int turn_hub() {
+    printf("Seclectionnez un personnage : \n [1] Paladin \n [2] Mage \n [3] Archer \n [4] Barbare \n");
+    if ((paladin.pv > 0) && (paladin.this_turn == 0)){
+        printf("[1] Paladin \n");
+    }
+    if ((mage.pv > 0) && (mage.this_turn == 0)){
+        printf("[2] Mage \n");
+    }
+    if ((archer.pv > 0) && (archer.this_turn == 0)){
+        printf("[3] archer \n");
+    }
+    if ((barbare.pv > 0) && (barbare.this_turn == 0)){
+        printf("[4] barbare \n");
+    }
+    scanf("%d",%choix_hero);
+    switch (choix_hero){
+        case 1 :
+
+
+
+
+    }
+
+}
+
+
 int main() {
+    struct Heros paladin;
+    struct Heros archer;
+    struct Heros mage;
+    struct Heros barbare;
+    //pv
+    paladin.pv = 150;
+    archer.pv = 100;
+    mage.pv = 100;
+    barbare.pv = 125;
+    //atk
+
+    int choix_hero = 0;
     int choix_m = 0;
     int choix_p = 0;
     int atk_m = 20;
@@ -85,12 +133,19 @@ int main() {
     
 	printf("pv = %d \n",pv_m);
 	do {
-		printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Emposonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
+       
+
+
+		
+
+
+
+        printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Empoisonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
 		scanf("%d",&choix_p);
 		while (mp_p < 5){
 		    if (choix_p > 2){
 		        printf("--Vous n'avez pas assez de mana");
-		        printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Emposonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
+		        printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Empoisonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
 		        scanf("%d",&choix_p);
 		    }else{
 		        break;
@@ -99,12 +154,22 @@ int main() {
 		while (choix_p == 4){
 		    if (poison_p == 0){
 		        printf("--Vous n'etes pas empoisonne \n");
-		        printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Emposonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
+		        printf("Que faites vous ? \n [1] Attaquer \n [2] Se Defendre \n [3] Empoisonner (coute 5 mp)\n [4] Antidote (coute 5 mp) \n");
 		        scanf("%d",&choix_p);
 		    }else{
 		        break;
 		    }
 		}
+
+
+
+
+
+
+
+
+
+
 		srand(time(NULL));
 		if (mp_m < 5){
 		    choix_m = (rand() % (2)+1);
@@ -138,7 +203,7 @@ int main() {
 		printf("Pv du Monstre : %d/100 \n",pv_m);
 		printf("Vos pv : %d/100 \n",pv_p);
 		printf("Mana : %d/10 \n",mp_p);
-		printf("===== Fin du Tour ===== \n");
+		printf("-----===== Fin du Tour =====----- \n");
 	}while(pv_m > 0 && pv_p > 0);
 	printf("pv = %d \n",pv_p);
 	printf("pv monstre = %d \n",pv_m);
