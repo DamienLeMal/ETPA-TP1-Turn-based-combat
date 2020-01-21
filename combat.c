@@ -52,6 +52,5 @@ int main() {
 
         //boucle des tours
             tour();
-
   return 0;
 }
