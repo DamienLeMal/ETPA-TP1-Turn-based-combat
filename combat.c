@@ -164,7 +164,7 @@ int tour(){
 }
 
 //affichage generique des stats : visuel de l'avancée du jeu. Quels heros sont encores en vie, barre d'xp...
-int display(int display, int hero, int monster){
+int display(int display, int hero, int monstre){
     switch (display){
         case 1 :
             //selection des personnages (vie, mp, xp, effets(ex : poison) pour chaque hero)
@@ -194,24 +194,51 @@ int display(int display, int hero, int monster){
         	switch (hero){
         		case 1 :
         			printf("Le Paladin assene un coup d'epee sur ");
+        			display(7,0,monstre);
+        			printf("\n");
         			break;
         		case 2 :
         			printf("L'Archer décoche sa fleche sur");
+        			display(7,0,monstre);
+        			printf("\n");
         			break;
         		case 3 :
         			printf("Le Mage lance un sort de feu sur");
+        			display(7,0,monstre);
+        			printf("\n");
         			break;
         		case 4 :
         			printf("Le Barbare s'élance, epee a la main sur");
+        			display(7,0,monstre);
+        			printf("\n");
         			break;
         	}
+        	display(7,0,monstre);
+        	break;
+        case 7 :
         	switch (monstre){
         		case 1 :
-        			printf("le Zombie\n");
+        			printf("le Zombie");
+        			break;
+        		default :
+        			break;
+        	}
+        	switch (hero){
+        		case 1 :
+					printf("le Paladin");
+        			break;
+        		case 2 :
+					printf("l'Archer");
+        			break;
+        		case 3 :
+					printf("le Mage");
+        			break;
+        		case 4 :
+					printf("le Barbare");
         			break;
         	}
         	break;
-        case 7 :
+        case 8 :
         	switch (hero){
         		case 1 :
 					printf("Le Paladin lève son bouclier\n");
@@ -226,28 +253,32 @@ int display(int display, int hero, int monster){
 					printf("Le Barbare gaine les abdos\n");
         			break;
         	}
-        	
-        	break;
-        case 8 :
-        	printf("Quel hero voulez vous soigner ?\n[1] Le Paladin %d/%d \n[2] L'archer %d/%d \n[3] L'archer %d/%d \n[4] L'archer %d/%d \n",paladin.pv,paladin.pv_max,archer.pv,archer.pv_max,mage.pv,mage.pv_max,barbare.pv,barbare.pv_max);
         	break;
         case 9 :
-        	printf();
+        	printf("Quel hero voulez vous soigner ?\n[1] Le Paladin %d/%d \n[2] L'archer %d/%d \n[3] Le Mage %d/%d \n[4] Le Barbare %d/%d \n",paladin.pv,paladin.pv_max,archer.pv,archer.pv_max,mage.pv,mage.pv_max,barbare.pv,barbare.pv_max);
         	break;
         case 10 :
-        	printf();
+        	printf("L'archer tente une esquive... L'esquive réussit ! Il esquive ");
+        	display(7,0,monstre);
+        	printf(" !\n");
         	break;
         case 11 :
-        	printf();
+        	printf("L'archer tente une esquive... L'esquive echoue ! Il se prend l'attaque lancee par ");
+        	display(7,0,monstre);
+        	printf(" de plein fouet !\n");
         	break;
         case 12 :
-        	printf();
+        	printf("L'archer empoisone ");
+        	display(7,0,monstre);
+        	printf("\n");
         	break;
         case 13 :
-        	printf();
+        	printf("Quel hero voulez vous guerir ?\n[1] Le Paladin \n[2] L'archer \n[3] Le Mage \n[4] Le Barbare \n");
         	break;
         case 14 :
-        	printf();
+        	printf("Le Mage soigne ");
+        	display(7,hero,0)
+        	printf(" de tous ses maux !\n");
         	break;
         case 15 :
         	printf();
@@ -267,6 +298,9 @@ int display(int display, int hero, int monster){
         case 20 :
         	printf();
         	break;
+        case 21 :
+        	printf();
+        	break;
     }
 }
 
@@ -275,6 +309,7 @@ int display(int display, int hero, int monster){
 int choice_p(hero,monstre,choix,atk) {
     //textes des attaques
     switch (hero){
+    	//paladin
     	case 1 :
     		switch(choix){
     			case 1:
@@ -293,18 +328,20 @@ int choice_p(hero,monstre,choix,atk) {
     				//soins
     				damage_given = 0;
     				paladin_spe1();
+    				paladin.mp -= 5;
     				return 1;
     				break;
     			case 4:
     				//resurection
     				damage_given = 0;
     				paladin_spe2();
+    				paladin.mp -= 10;
     				return 1;
     				break;
     		}
     		break;
+    	//archer
     	case 2 :
-    		case 1 :
     		switch(choix){
     			case 1:
     				//attaque
@@ -324,24 +361,30 @@ int choice_p(hero,monstre,choix,atk) {
     				int chance = (rand() % (2)+1);
     				if (chance == 1){
     					return 1000;
+    					display(10,hero,monstre);
     				}else{
     					return 1;
+    					display(11,hero,monstre);
     				}
+    				archer.mp -= 1;
     				break;
     			case 4:
     				//fleche empoisonée
     				damage_given = archer.atk;
-
+    				archer_spe2(monstre);
+    				display(12,0,monstre);
+    				archer.mp -= 5;
     				return 1;
     				break;
     		}
     		break;
+    	//mage
     	case 3 :
     		case 1 :
     		switch(choix){
     			case 1:
     				//attaque
-    				damage_given = paladin.atk;
+    				damage_given = mage.atk;
     				display(6,hero,monstre);
     				return 1;
     				break;
@@ -354,7 +397,8 @@ int choice_p(hero,monstre,choix,atk) {
     			case 3:
     				//guerison
     				damage_given = 0;
-
+    				mage_spe1();
+    				mage.mp -= 5;
     				return 1;
     				break;
     			case 4:
@@ -365,6 +409,7 @@ int choice_p(hero,monstre,choix,atk) {
     				break;
     		}
     		break;
+    	//barbare
     	case 4 :
     		case 1 :
     		switch(choix){
@@ -398,10 +443,6 @@ int choice_p(hero,monstre,choix,atk) {
     				break;
     		}
     		break;
-
-
-
-
     }
 }
 
@@ -449,6 +490,35 @@ int paladin_spe2(){
     	}
     }
 }
+int archer_spe2(monstre){
+	switch (monstre){
+		case 1:
+			zombie.poison = 1;
+			break;
+	}
+}
+int mage_spe1(){
+	int choix_mage = 0;
+	display();
+	scanf("%d",&choix_mage);
+	switch (choix_mage){
+		case 1:
+			paladin.poison = 0;
+			//paladin.autre
+			break;
+		case 2:
+			archer.poison = 0;
+			break;
+		case 3:
+			mage.poison = 0;
+			break;
+		case 4:
+			barbare.poison = 0;
+			break;
+	}
+	display(14,choix_mage,0);
+}
+
 //determine le choix des monstres en focntion de quel choix genere/quel monstre combat
 int choice_m(monstre,choix,atk) {
 
