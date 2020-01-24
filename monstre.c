@@ -69,7 +69,7 @@ monster monsterChoice(monster monster1, int niveau){
         break;
 
         default:
-            printf("Salut, je suis uukgkune goule\n");
+            printf("Salut, je suis une goule\n");
             printf("vie:%d mana:%d\n", choixMonstre );
         break;
         }
