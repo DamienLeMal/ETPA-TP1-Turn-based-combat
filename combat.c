@@ -10,9 +10,9 @@ int damage_taken = 0;
 struct Heros {
 	int pv_max = 0;
     int pv = 0;
-    int mp = 0;
     int atk = 0;
     int poison = 0;
+    int stun = 0;
     int spe1 = 0;
     int spe2 = 0;
 }
@@ -170,9 +170,6 @@ int display(int display, int hero, int monstre){
             //selection des personnages (vie, mp, xp, effets(ex : poison) pour chaque hero)
             printf("[1] Paladin ----- Vie : %d/%d ----- Attaque : %d \n[2] Archer ----- Vie : %d/%d ----- Attaque : %d \n[3] Mage ----- Vie : %d/%d ----- Attaque : %d \n[4] Barbare ----- Vie : %d/%d ----- Attaque : %d \n",paladin.pv,paladin.pv_max,paladin.atk,archer.pv,archer.pv_max,archer.atk,mage.pv,mage.pv_max,mage.atk,barbare.pv,barbare.pv_max,barbare.atk);
             break;
-        //+
-        //Menu d'attaque de chaque hero
-
         case 2 :
             //paladin
             printf("[1] Attaque --- 0 mp \n[2] Defense --- 0 mp \n[3] Soins --- 5 mp \n[4] Resurection --- 10 mp\n");
@@ -187,7 +184,7 @@ int display(int display, int hero, int monstre){
             break;
         case 5 :
             //barbare
-            printf("[1] Attaque --- 0 mp \n[2] Defense --- 0 mp \n[3] Frappe sanglante --- 3 mp \n[4] Rage --- 8 mp (Probabilite de prendre cher : 50%)\n");
+            printf("[1] Attaque --- 0 mp \n[2] Defense --- 0 mp \n[3] Frappe sanglante --- 3 mp \n[4] Rage --- 6 mp (Probabilite de prendre cher : 50%)\n");
             break;
         case 6 :
         	//attaque
@@ -236,6 +233,8 @@ int display(int display, int hero, int monstre){
         		case 4 :
 					printf("le Barbare");
         			break;
+        		default :
+        			break;
         	}
         	break;
         case 8 :
@@ -277,28 +276,41 @@ int display(int display, int hero, int monstre){
         	break;
         case 14 :
         	printf("Le Mage soigne ");
-        	display(7,hero,0)
+        	display(7,hero,0);
         	printf(" de tous ses maux !\n");
         	break;
         case 15 :
-        	printf();
+        	printf("Le mage tente en vain d'endormir ");
+        	display(7,0,monstre);
         	break;
         case 16 :
-        	printf();
+        	printf("Le mage endore ");
+        	display(7,0,monstre);
         	break;
         case 17 :
-        	printf();
+        	printf("Le Barbare plante son epee de toutes ses forces dans ");
+        	display(7,0,monstre);
+        	printf(" !\n");
         	break;
         case 18 :
-        	printf();
+        	printf("Le Barbare, fou de rage, se jette sur ");
+        	display(7,0,monstre);
+        	printf(" !\n");
         	break;
         case 19 :
-        	printf();
+        	printf("Apres avoir violement abattu son courroux sur ");
+        	display(7,0,monstre);
+        	printf(" le barbare se fait violement envoye a terre !\n");
         	break;
         case 20 :
-        	printf();
+        	printf("Le courroux du Barbare s'est abattu sur ");
+        	display(7,0,monstre);
+        	printf(" la decheance de ce dernier n'est plus qu'une question de temps...\n");
         	break;
         case 21 :
+        	printf();
+        	break;
+        case 22 :
         	printf();
         	break;
     }
@@ -306,7 +318,7 @@ int display(int display, int hero, int monstre){
 
 
 //determine les actions a effectuer en fonction des choix du joueur
-int choice_p(hero,monstre,choix,atk) {
+int choice_p(int hero, int monstre, int choix, int atk) {
     //textes des attaques
     switch (hero){
     	//paladin
@@ -328,14 +340,14 @@ int choice_p(hero,monstre,choix,atk) {
     				//soins
     				damage_given = 0;
     				paladin_spe1();
-    				paladin.mp -= 5;
+    				mp -= 5;
     				return 1;
     				break;
     			case 4:
     				//resurection
     				damage_given = 0;
     				paladin_spe2();
-    				paladin.mp -= 10;
+    				mp -= 10;
     				return 1;
     				break;
     		}
@@ -358,7 +370,7 @@ int choice_p(hero,monstre,choix,atk) {
     			case 3:
     				//esquive
     				damage_given = 0;
-    				int chance = (rand() % (2)+1);
+    				int chance = (rand() % (archer.spe1)+1);
     				if (chance == 1){
     					return 1000;
     					display(10,hero,monstre);
@@ -366,14 +378,14 @@ int choice_p(hero,monstre,choix,atk) {
     					return 1;
     					display(11,hero,monstre);
     				}
-    				archer.mp -= 1;
+    				mp -= 1;
     				break;
     			case 4:
     				//fleche empoisonée
-    				damage_given = archer.atk;
+    				damage_given = archer.atk * archer.spe2;
     				archer_spe2(monstre);
     				display(12,0,monstre);
-    				archer.mp -= 5;
+    				mp -= 5;
     				return 1;
     				break;
     		}
@@ -398,13 +410,20 @@ int choice_p(hero,monstre,choix,atk) {
     				//guerison
     				damage_given = 0;
     				mage_spe1();
-    				mage.mp -= 5;
+    				mp -= 5;
     				return 1;
     				break;
     			case 4:
     				//somnifère
+    				int chance = (rand() % (mage.spe2)+1);
+    				if (chance = 1){
+    					display(16,0,monstre);
+    					mage_spe2(monstre);
+    				}else{
+    					display(15,0,monstre);
+    				}
     				damage_given = 0;
-
+    				mp -= 5;
     				return 1;
     				break;
     		}
@@ -415,7 +434,7 @@ int choice_p(hero,monstre,choix,atk) {
     		switch(choix){
     			case 1:
     				//attaque
-    				damage_given = paladin.atk;
+    				damage_given = barbare.atk;
     				display(6,hero,monstre);
     				return 1;
     				break;
@@ -427,17 +446,23 @@ int choice_p(hero,monstre,choix,atk) {
     				break;
     			case 3:
     				//frappe sanglante
-    				damage_given = 0;
-
+    				damage_given = barbare.atk * barbare.spe1;
+    				display(16,0,monstre);
+    				mp -= 3;
     				return 1;
     				break;
     			case 4:
     				//rage
-    				damage_given = barbare.atk * 2;
+    				mp -= 6;
+    				damage_given = barbare.atk * barbare.spe2;
+    				display(17,0,monstre);
     				int chance = (rand() % (3)+1);
     				if (chance = 1){
+    					barbare.pv -= barbare.atk;
+    					display(18,0,monstre);
     					return 0.5;
     				}else{
+    					display(19,0,monstre);
     					return 1;
     				}
     				break;
@@ -477,15 +502,15 @@ int paladin_spe2(){
    		scanf("%d",&choix_paladin);
    		if (choix_paladin == 2){
     		if (archer.pv == 0){
-    			archer.pv += paladin.spe2;
+    			archer.pv = archer.pv_max * paladin.spe2;
     		}
     	}else if (choix_mage == 3){
     		if (mage.pv == 0){
-    			mage.pv += paladin.spe2;
+    			mage.pv = mage.pv_max * paladin.spe2;
     		}
     	}else if (choix_mage == 4){
     		if (barbare.pv == 0){
-    			barbare.pv += paladin.spe2;
+    			barbare.pv = barbare.pv_max * paladin.spe2;
     		}
     	}
     }
@@ -499,26 +524,36 @@ int archer_spe2(monstre){
 }
 int mage_spe1(){
 	int choix_mage = 0;
-	display();
+	display(14);
 	scanf("%d",&choix_mage);
 	switch (choix_mage){
 		case 1:
+			paladin.pv += mage.spe1;
 			paladin.poison = 0;
 			//paladin.autre
 			break;
 		case 2:
+			archer.pv += mage.spe1;
 			archer.poison = 0;
 			break;
 		case 3:
+			mage.pv += mage.spe1;
 			mage.poison = 0;
 			break;
 		case 4:
+			barbare.pv += mage.spe1;
 			barbare.poison = 0;
 			break;
 	}
 	display(14,choix_mage,0);
 }
-
+int mage_spe2(monstre){
+	switch (monstre){
+		case 1:
+			zombie.stun = 1;
+			break;
+	}
+}
 //determine le choix des monstres en focntion de quel choix genere/quel monstre combat
 int choice_m(monstre,choix,atk) {
 
@@ -529,7 +564,11 @@ int main() {
 
         //avancée des joueurs dans le jeu
         //(re)set de la vie, des mp, etc
-
+        typedef struct Heros heros;
+        	hero paladin = {150,150,30,0,0,30,0.2};
+        	hero archer = {80,80,30,0,0,3,40};
+        	hero mage = {100,100,30,0,0,10,4};
+        	hero barbare = {120,120,50,0,0,1.5,2};
         //boucle des tours
             tour();
   return 0;
