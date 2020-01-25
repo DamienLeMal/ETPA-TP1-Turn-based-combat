@@ -10,6 +10,8 @@ int monstre2 = 0;
 int monstre3 = 0;
 int navigateur = 0;
 int check = 0;
+
+int one = 0,two = 0,three = 0,four = 0,five = 0,six = 0,seven = 0,eight = 0,nine = 0,ten = 0,eleven = 0,twelve = 0,thirteen = 0,fourteen = 0,fifteen = 0,sixteen = 0;
 //provisoire
 //int monstre = 11;
 //provisoire
@@ -60,21 +62,6 @@ int tirage(){
     	    tableau_monster[k] = stock;
     	}
 }
-
-int sub_select_monstre(i,nombre){
-	switch (i){
-        case 1:
-        	monstre1 = nombre;
-        	break;
-        case 2:
-        	monstre2 = nombre;
-        	break;
-        case 3:
-        	monstre3 = nombre;
-        	break;
-    }
-}
-
 //Choix du monstre selon la progression du joueur
 int select_monstre(manche){
     int nbr_monstre = 0;
@@ -93,6 +80,22 @@ int select_monstre(manche){
         	tableau_monster[i] = tableau_monster[k];
         	tableau_monster[k] = stock;
     	}
+    	one = tableau_monster[0];
+    	two = tableau_monster[1];
+    	three = tableau_monster[2];
+    	four = tableau_monster[3];
+    	five = tableau_monster[4];
+    	six = tableau_monster[5];
+    	seven = tableau_monster[6];
+    	eight = tableau_monster[7];
+    	nine = tableau_monster[8];
+    	ten = tableau_monster[9];
+    	eleven = tableau_monster[10];
+    	twelve = tableau_monster[11];
+    	thirteen = tableau_monster[12];
+    	fourteen = tableau_monster[13];
+    	fifteen = tableau_monster[14];
+    	sixteen = tableau_monster[15];
     }
 	//switch (manche){}
 
@@ -112,89 +115,48 @@ int select_monstre(manche){
     monstres sorcier = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
     monstres chien_loup = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
     monstres serpent_geant = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-
-    
-    //definition du nombre de monstre à sortir (en fonction de la manche)
-    if (manche <= 5){
-    	nbr_monstre = 1;
-    }else if (manche <= 9){
-    	nbr_monstre = 2;
-    }else{
-    	nbr_monstre = 3;
-    }
-    for (int i = 1; i <= nbr_monstre; ++i){
-    	if (manche <= 5){
-    		nombre = tableau_monster[manche - 1];
-    	}else switch (manche){
-    		case 6:
-    			nombre = 4 + i;
-    			break;
-    		case 7:
-    			nombre = 6 + i
-    			break;
-    		case 8:
-    			nombre = 8 + i;
-    			break;
-    		case 9:
-    			nombre = 10 + i;
-    			break;
-    		case 10:
-    			nombre = 12 + i;
-    			break;
-    	}
-    	printf(" %d ",nombre);
-    	switch (nombre){
-        	case 1:
-        		sub_select_monstre(i,nombre);
-        		break;
-        	case 2: 
-        		sub_select_monstre(i,nombre);
-        		break;
-        	case 3: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 4:
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 5: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 6: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 7: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 8:
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 9: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 10: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 11: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 12:
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 13: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 14: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 15: 
-        	    sub_select_monstre(i,nombre);
-        		break;
-        	case 16:
-        	    sub_select_monstre(i,nombre);
-        		break;
-        }
+//definition du nombre de monstre à sortir (en fonction de la manche)
+    switch(manche){
+    	case 1:
+    		monstre1 = one;
+    		break;
+    	case 2:
+    		monstre1 = two;
+    		break;
+    	case 3:
+    		monstre1 = three;
+    		break;
+    	case 4:
+    		monstre1 = four;
+    		break;
+    	case 5:
+    		monstre1 = five;
+    		break;
+    	case 6:
+    		monstre1 = six;
+    		monstre2 = seven;
+    		break;
+    	case 7:
+    		monstre1 = eight;
+    		monstre2 = nine;
+    		break;
+    	case 8:
+    		monstre1 = ten;
+    		monstre2 = eleven;
+    		break;
+    	case 9:
+    		monstre1 = twelve;
+    		monstre2 = thirteen;
+    		break;
+    	case 10:
+    		monstre1 = fourteen;
+    		monstre2 = fifteen;
+    		monstre3 = sixteen;
+    		break;
     }
 }
+    
+   
 
 //affichage generique des stats : visuel de l'avancée du jeu. Quels heros sont encores en vie, barre d'xp...
 int display(int code, int hero, int monstre){
@@ -552,6 +514,7 @@ int choice_p(int hero, int monstre, int choix) {
     		switch(choix){
     			case 1:
     				//attaque
+    				monstre = monster_designated();
     				damage_given = paladin.atk;
     				display(6,hero,monstre);
     				return 1;
@@ -583,6 +546,7 @@ int choice_p(int hero, int monstre, int choix) {
     		switch(choix){
     			case 1:
     				//attaque
+    				monstre = monster_designated();
     				damage_given = archer.atk;
     				display(6,hero,monstre);
     				return 1;
@@ -608,6 +572,7 @@ int choice_p(int hero, int monstre, int choix) {
     				break;
     			case 4:
     				//fleche empoisonée
+    				monstre = monster_designated();
     				damage_given = archer.atk * archer.spe2;
     				archer_spe2(monstre);
     				display(13,0,monstre);
@@ -621,6 +586,7 @@ int choice_p(int hero, int monstre, int choix) {
     		switch(choix){
     			case 1:
     				//attaque
+    				monstre = monster_designated();
     				damage_given = mage.atk;
     				display(6,hero,monstre);
     				return 1;
@@ -640,6 +606,7 @@ int choice_p(int hero, int monstre, int choix) {
     				break;
     			case 4:
     				//somnifère
+    				monstre = monster_designated();
     				chance = random_nbr(1,mage.spe2);
        				if (chance == 1){
     					display(17,0,monstre);
@@ -658,6 +625,7 @@ int choice_p(int hero, int monstre, int choix) {
     		switch(choix){
     			case 1:
     				//attaque
+    				monstre = monster_designated();
     				damage_given = barbare.atk;
     				display(6,hero,monstre);
     				return 1;
@@ -670,6 +638,7 @@ int choice_p(int hero, int monstre, int choix) {
     				break;
     			case 3:
     				//frappe sanglante
+    				monstre = monster_designated();
     				damage_given = barbare.atk * barbare.spe1;
     				display(18,0,monstre);
     				mp -= 3;
@@ -677,6 +646,7 @@ int choice_p(int hero, int monstre, int choix) {
     				break;
     			case 4:
     				//rage
+    				monstre = monster_designated();
     				mp -= 6;
     				damage_given = barbare.atk * barbare.spe2;
     				display(19,0,monstre);
@@ -806,7 +776,6 @@ int choose(){
                 	}
                 }
             }
-            monstre = monster_designated();
             test = 0;
             choice_p(hero,monstre,choix);
             break;
@@ -887,9 +856,6 @@ int choose(){
 
 //chaque tour
 int tour(manche){
-	
-    
-
     if (manche <= 5){
     	//2 d'affil
     	choose();
@@ -917,30 +883,31 @@ int tour(manche){
 }
 int main() {
 	srand(time(NULL));
-	int test = 0;
+	int test = 1;
 	int tours = 0;
     //boucle des manches
-    for (int manche = 0; manche < 10; manche++){
+
+    for (int manche = 1; manche < 11; manche++){
  		//debut manche
- 		tours = 0;
- 		test = 0;
+ 		test = 1;
     	select_monstre(manche);
+    	tours = 0;
     	heros paladin = {150,150,30,0,0,30,0.2};
     	heros archer = {80,80,30,0,0,3,40};
     	heros mage = {100,100,30,0,0,10,4};
     	heros barbare = {120,120,50,0,0,1.5,2};
 
     	//boucle des tours
-    	while (test == 0)/*||(Tous les monstres en vie)*/{
-    		tours++;
+    	while (test != 0)/*||(Tous les monstres en vie)*/{
+    	tours++;
     		if (tours < 10){
-    			display(27,1,tours);
+    			display(27,5,tours);
     		}else{
     			display(27,2,tours);
     		}
     		tour(manche);
     	    //compte le nombre de heros en vie et attribue du mana en conséquence
-    	    test = 1;//mana();
+    	    test = mana();
     	}
     }
   return 0;
