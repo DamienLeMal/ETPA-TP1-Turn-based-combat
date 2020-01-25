@@ -228,6 +228,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                return 1000
                 break;
         }
     case 3:
@@ -242,6 +243,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                hero.infection = 1
                 break;
         }
     case 4:
@@ -284,6 +286,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                damage_taken = orc.atk*2
                 break;
         }
     case 7:
@@ -298,6 +301,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                damage_taken = troll.atk*2
                 break;
         }
     case 8:
@@ -312,6 +316,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                return 1000
                 break;
         }
     case 9:
@@ -340,6 +345,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                hero.stun = 1;
                 break;
         }
     case 11:
@@ -354,6 +360,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                hero.poison = 1;
                 break;
         }
     case 12:
@@ -368,6 +375,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                return 1000
                 break;
         }
         case 13:
@@ -382,6 +390,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                geant.atk = geant.atk*3 //degats de zone sup
                 break;
         }
     case 14:
@@ -410,6 +419,9 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                chien_loup.atk = chien_loup.atk*2
+                chien_loup.mp = chien_loup.mp*2
+                //si t"as d'autre idée de truc a boost
                 break;
         }
     case 16:
@@ -424,6 +436,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                hero.burn = 1;
                 break;
         }
 }
