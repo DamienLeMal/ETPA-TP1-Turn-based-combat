@@ -214,6 +214,8 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                hero= hero_designated();
+                minotaure.atk = minotaure.atk* //hero vivant
                 break;
         }
     case 2:
@@ -258,6 +260,8 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                damage_taken = 20;
+                vampire.pv = vampire.pv + 20;
                 break;
         }
     case 5:
@@ -331,6 +335,8 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                hero= hero_designated();
+                elfe_noir.atk = elfe_noir.atk* // nombre de hero restant
                 break;
         }
     case 10:
@@ -405,6 +411,8 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                 monstre= monstre_designated();
+                 monstre.pv = monstre.pv_max
                 break;
         }
     case 15:
