@@ -205,10 +205,12 @@ switch (monstre){
     case 1:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = minotaure.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -217,10 +219,12 @@ switch (monstre){
     case 2:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = goule.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -229,10 +233,12 @@ switch (monstre){
     case 3:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = zombie.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -241,10 +247,12 @@ switch (monstre){
     case 4:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = vampire.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -253,10 +261,12 @@ switch (monstre){
     case 5:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = squellette.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -265,10 +275,12 @@ switch (monstre){
     case 6:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = orc.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -277,10 +289,12 @@ switch (monstre){
     case 7:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = troll.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -289,10 +303,12 @@ switch (monstre){
     case 8:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = goblin.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -301,10 +317,12 @@ switch (monstre){
     case 9:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = elfe_noir.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -313,10 +331,12 @@ switch (monstre){
     case 10:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = golem.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -325,10 +345,12 @@ switch (monstre){
     case 11:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = araignee_geante.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -337,10 +359,26 @@ switch (monstre){
     case 12:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = licorne.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+        case 13:
+        switch(choix_monstre){
+            case 1:
+                //attaques
+                damage_taken = geant.atk;
+                break;
+            case 2:
+                //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -349,10 +387,12 @@ switch (monstre){
     case 14:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = sorcier.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -361,10 +401,12 @@ switch (monstre){
     case 15:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = chien_loup.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -373,10 +415,12 @@ switch (monstre){
     case 16:
         switch(choix_monstre){
             case 1:
-                //attaque
+                //attaques
+                damage_taken = serpent_geant.atk;
                 break;
             case 2:
                 //défense
+                damage_taken = 0;
                 break;
             case 3:
                 //attaque spé
@@ -409,6 +453,7 @@ int display(){
 //determine les actions a effectuer en fonction des choix du joueur
 //int choice_p(hero,choix,atk) {
     //textes des attaques
+    damage_taken = paladin.atk;
 
 //determine le choix des monstres en focntion de quel choix genere/quel monstre combat
 //int choice_m(monstre,choix,atk) {
