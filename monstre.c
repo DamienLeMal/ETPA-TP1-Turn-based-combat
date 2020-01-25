@@ -13,69 +13,193 @@ struct Heros {
 };
 
 struct Monstre {
-    int pv ;
-    int mp ;
-    int atk ;
-    int poison ;
-    int spe_1;
-    int spe_2;
-    int this_turn;
-    int id;
+    int pv_max;
+    int pv;
+    int atk;
+    int poison;
+    int stun;
+    int spe1;
 };
 
 typedef struct Monstre monster ;
 typedef struct Hero human ;
 
+int mp = 0;
+
 //Choix du monstre selon la progression du joueur
 
 monster monsterChoice(monster monster1, int niveau){
-        monster minotaure = {1000, 5, 50, 5, 70, 80};
-        monster goule = {300, 10, 30, 20, 40, 50};
-        monster zombie = {100, 10, 20, 30, 50, 60};
-        monster sucre = {500, 20, 40, 10, 30, 40};
+
+   // int nombre = 0;
+
+        monster minotaure = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster goule = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster zombie = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster vampire = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster squellette = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster orc = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster troll = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster goblin = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster elfe_noir = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster golem = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster araignee_geante = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster licorne = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster geant = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster sorcier = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster chien_loup = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster serpent_geant = {200*niveau,200*niveau,30,0,0,30*niveau};
     //int select_monstre(){
     //choix du monster aleatoire
         //chaque monster a ses capacites propres (spé1 et spé2)
     //choix des stats defini
-        int choixMonstre;
-        const int MIN = 1, MAX = 4;
-        choixMonstre = (rand() % (MAX + 1 - MIN)) + MIN; 
-           
+
+       
+
+
+        //int choixMonstre;
+        //choixMonstre = (rand() % (16 + 1 - 1)) + 1; 
+            int nombre;
+            nombre = random_nbr(1,16);
         
-        switch (choixMonstre)
+        switch (nombre)
         {
-        case 1:
+        case 1: 
             monster1 = minotaure;
-            printf("Minotaure en avant \n");
-            printf("vie:%d mana:%d\n", minotaure.pv, minotaure.mp );
+            printf("\n");
+            printf("vie:%d \n", minotaure.pv);
+
+            current_monster = 1
         break;
 
-        case 2:
+        case 2: 
             monster1 = goule;
-            printf("Salut, je suis une goule\n");
-            printf("vie:%d mana:%d\n", goule.pv, goule.mp );
+            printf("\n");
+            printf("vie:%d \n", goule.pv);
+
+            current_monster2 = 2
         break;
 
-        case 3:
+        case 3: 
             monster1 = zombie;
-            printf("BRAIIIIN\n");
-            printf("vie:%d mana:%d\n", zombie );
+            printf("\n");
+            printf("vie:%d \n", zombie.pv);
+
+            current_monster3 = 3
         break;
 
         case 4:
-            monster1 = sucre;
-            printf("hello, je suis du sucre\n");
-            printf("vie:%d mana:%d\n", sucre );
+            monster1 = vampire;
+            printf("\n");
+            printf("vie:%d \n", vampire.pv);
+
+            current_monster4 = 4
         break;
 
-        default:
-            printf("Salut, je suis une goule\n");
-            printf("vie:%d mana:%d\n", choixMonstre );
+        case 5: 
+            monster1 = squellette;
+            printf("\n");
+            printf("vie:%d \n", squellette.pv);
+
+            current_monster5 = 5
         break;
+
+        case 6: 
+            monster1 = orc;
+            printf("\n");
+            printf("vie:%d \n", orc.pv);
+
+            current_monster6 = 6
+        break;
+
+        case 7: 
+            monster1 = troll;;
+            printf("\n");
+            printf("vie:%d \n", troll.pv);
+
+            current_monste7 = 7
+        break;
+
+        case 8:
+            monster1 = goblin;
+            printf("\n");
+            printf("vie:%d \n", goblin.pv);
+
+            current_monster8 = 8
+        break;
+
+        case 9: 
+            monster1 = elfe_noir;
+            printf("\n");
+            printf("vie:%d \n", elfe_noir.pv);
+
+            current_monster9 = 9
+        break;
+
+        case 10: 
+            monster1 = golem;
+            printf("\n");
+            printf("vie:%d \n", golem.pv);
+
+            current_monster10 = 10
+        break;
+
+        case 11: 
+            monster1 = araignee_geante;
+            printf("\n");
+            printf("vie:%d \n", araignee_geante.pv);
+
+            current_monster11 = 11
+        break;
+
+        case 12:
+            monster1 = licorne;
+            printf("\n");
+            printf("vie:%d \n", licorne.pv);
+
+            current_monster12 = 12
+        break;
+
+        case 13: 
+            monster1 = geant;
+            printf("\n");
+            printf("vie:%d \n", geant.pv);
+
+            current_monster13 = 13
+        break;
+
+        case 14: 
+            monster1 = sorcier;
+            printf("\n");
+            printf("vie:%d \n", sorcier.pv);
+
+            current_monster14 = 14
+        break;
+
+        case 15: 
+            monster1 = chien_loup;
+            printf("\n");
+            printf("vie:%d \n", chien_loup.pv);
+
+            current_monster15 = 15
+        break;
+
+        case 16:
+            monster1 = serpent_geant;
+            printf("\n");
+            printf("vie:%d \n", serpent_geant.pv);
+
+            current_monster16 = 16
+        break;
+
+
         }
 
         return monster1;
+
+
     }
+
+
 
 
 
