@@ -5,9 +5,13 @@
 int damage_given = 0;
 int damage_taken = 0;
 int mp = 0;
-
+int monstre1 = 0;
+int monstre2 = 0;
+int monstre3 = 0;
+int navigateur = 0;
+int check = 0;
 //provisoire
-int monstre = 1;
+//int monstre = 11;
 //provisoire
 
 typedef struct Heros {
@@ -20,24 +24,176 @@ typedef struct Heros {
     int spe2;
 } heros;
 
+typedef struct Monstres {
+    int pv_max;
+    int pv;
+    int atk;
+    int poison;
+    int stun;
+    int spe1;
+} monstres;
+
 heros paladin = {150,150,30,0,0,30,0.2};
 heros archer = {80,80,30,0,0,3,40};
 heros mage = {100,100,30,0,0,10,4};
 heros barbare = {120,120,50,0,0,1.5,2};
 
 
+
 int random_nbr (int min, int max){
 	int nbr = 0;
 	nbr = (min + (rand () % (max + 1 - min)));
-	printf("\n %d \n",nbr);
 	return nbr;
 }
 
+int tirage(){
+    int tableau_monster[16];
+    int k = 0;
+    int stock = 0;
+    	for (int i = 0; i < 16; ++i){
+		    tableau_monster[i] = i + 1;
+    	}
+    	for (int i = 0; i < 16; ++i){
+    	    k = random_nbr(0,15);
+    	    stock = tableau_monster[i];
+    	    tableau_monster[i] = tableau_monster[k];
+    	    tableau_monster[k] = stock;
+    	}
+}
+
+int sub_select_monstre(i,nombre){
+	switch (i){
+        case 1:
+        	monstre1 = nombre;
+        	break;
+        case 2:
+        	monstre2 = nombre;
+        	break;
+        case 3:
+        	monstre3 = nombre;
+        	break;
+    }
+}
+
 //Choix du monstre selon la progression du joueur
-int select_monstre(){
-    //choix du monster aleatoire
-        //chaque monster a ses capacites propres (spé1 et spé2)
-    //choix des stats defini
+int select_monstre(manche){
+    int nbr_monstre = 0;
+	int nombre = 0;
+	int niveau = 0;
+	int tableau_monster[16];
+    int k = 0;
+    int stock = 0;
+    if (manche == 1){
+    	for (int i = 0; i < 16; ++i){
+	    	tableau_monster[i] = i + 1;
+    	}
+    	for (int i = 0; i < 16; ++i){
+        	k = random_nbr(0,15);
+        	stock = tableau_monster[i];
+        	tableau_monster[i] = tableau_monster[k];
+        	tableau_monster[k] = stock;
+    	}
+    }
+	//switch (manche){}
+
+	monstres minotaure = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres goule = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres zombie = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres vampire = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres squellette = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres orc = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres troll = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres goblin = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres elfe_noir = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres golem = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres araignee_geante = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres licorne = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres geant = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres sorcier = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres chien_loup = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+    monstres serpent_geant = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
+
+    
+    //definition du nombre de monstre à sortir (en fonction de la manche)
+    if (manche <= 5){
+    	nbr_monstre = 1;
+    }else if (manche <= 9){
+    	nbr_monstre = 2;
+    }else{
+    	nbr_monstre = 3;
+    }
+    for (int i = 1; i <= nbr_monstre; ++i){
+    	if (manche <= 5){
+    		nombre = tableau_monster[manche - 1];
+    	}else switch (manche){
+    		case 6:
+    			nombre = 4 + i;
+    			break;
+    		case 7:
+    			nombre = 6 + i
+    			break;
+    		case 8:
+    			nombre = 8 + i;
+    			break;
+    		case 9:
+    			nombre = 10 + i;
+    			break;
+    		case 10:
+    			nombre = 12 + i;
+    			break;
+    	}
+    	printf(" %d ",nombre);
+    	switch (nombre){
+        	case 1:
+        		sub_select_monstre(i,nombre);
+        		break;
+        	case 2: 
+        		sub_select_monstre(i,nombre);
+        		break;
+        	case 3: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 4:
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 5: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 6: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 7: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 8:
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 9: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 10: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 11: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 12:
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 13: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 14: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 15: 
+        	    sub_select_monstre(i,nombre);
+        		break;
+        	case 16:
+        	    sub_select_monstre(i,nombre);
+        		break;
+        }
+    }
 }
 
 //affichage generique des stats : visuel de l'avancée du jeu. Quels heros sont encores en vie, barre d'xp...
@@ -91,9 +247,52 @@ int display(int code, int hero, int monstre){
         case 7 :
         	switch (monstre){
         		case 1 :
+        			printf("le Minotaure");
+        			break;
+        		case 2 :
+        			printf("la Goule");
+        			break;
+        		case 3 :
         			printf("le Zombie");
         			break;
-        		default :
+        		case 4 :
+        			printf("le Vampire");
+        			break;
+        		case 5 :
+        			printf("le Squellette");
+        			break;
+        		case 6 :
+        			printf("l'Orc");
+        			break;
+        		case 7 :
+        			printf("le Troll");
+        			break;
+        		case 8 :
+        			printf("le Gobelin");
+        			break;
+        		case 9 :
+        			printf("l'Elfe Noir");
+        			break;
+        		case 10 :
+        			printf("le Golem");
+        			break;
+        		case 11 :
+        			printf("l'Araignee Geante");
+        			break;
+        		case 12 :
+        			printf("la Licorne");
+        			break;
+        		case 13 :
+        			printf("le Geant");
+        			break;
+        		case 14 :
+        			printf("le Sorcier");
+        			break;
+        		case 15 :
+        			printf("le Chien-Loup");
+        			break;
+        		case 16 :
+        			printf("le Serpent Geant");
         			break;
         	}
         	switch (hero){
@@ -214,6 +413,31 @@ int display(int code, int hero, int monstre){
        		}else{
        			//2 digits
        			printf("---------- Debut d'un Nouveau Tour ----------\n------------------ Tour %d ------------------\n",monstre);
+       		}
+       		break;
+       	case 28 :
+       		printf("Quel Monstre voulez vous attaquer ? \n");
+       		if (monstre3 != 0){
+       			printf("[1] Attaquer ");
+       			display(7,0,monstre1);
+       			printf("\n");
+       			printf("[2] Attaquer ");
+       			display(7,0,monstre2);
+       			printf("\n");
+       			printf("[3] Attaquer ");
+       			display(7,0,monstre3);
+       			printf("\n");
+       		}else if (monstre2 != 0){
+       			printf("[1] Attaquer ");
+       			display(7,0,monstre1);
+       			printf("\n");
+       			printf("[2] Attaquer ");
+       			display(7,0,monstre2);
+       			printf("\n");
+       		}else{
+       			printf("[1] Attaquer ");
+       			display(7,0,monstre1);
+       			printf("\n");
        		}
        		break;
     }
@@ -495,9 +719,38 @@ int mana(){
 	display(26,cumul,0);
 	return cumul;
 }
-//chaque tour
-int tour(){
+int monster_designated(){
+    int test = 0;
+	int monster_choosen = 0;
+	display(28,0,0);
+	while (test == 0){
+		scanf("%d",&monster_choosen);
+		if (monstre3 != 0){
+       			if ((monster_choosen <= 3)&&(monster_choosen >= 1)){
+       				test = 1;
+       			}
+       	}else if (monstre2 != 0){
+       		if ((monster_choosen <= 2)&&(monster_choosen >= 1)){
+       			test = 1;
+       		}
+       	}else{
+       		if (monster_choosen == 1){
+       			test = 1;
+       		}
+       	}
+    }
+    if (monster_choosen == 1){
+    	return monstre1;
+    }else if (monster_choosen == 2){
+    	return monstre2;
+    }else if (monster_choosen == 1){
+    	return monstre3;
+    }
+}
+//Choix d'un hero et de son action
+int choose(){
 	int hero = 0;
+	int monstre = 0;
 	int choix = 0;
     int test = 0;
     int hero_disponibles[4];
@@ -505,165 +758,189 @@ int tour(){
     hero_disponibles[1] = 1;
     hero_disponibles[2] = 1;
     hero_disponibles[3] = 1;
-    
-    //2 personnages
-    for (int i = 0; i < 2; ++i) {
-        //Choix hero
-        if (paladin.pv == 0){
-        	hero_disponibles[0] = 0;
-        }
-        if (archer.pv == 0){
-        	hero_disponibles[1] = 0;
-        }
-        if (mage.pv == 0){
-        	hero_disponibles[2] = 0;
-        }
-        if (barbare.pv == 0){
-        	hero_disponibles[3] = 0;
-        }
-        while (test == 0){
-            display(22,0,0);
-            scanf("%d",&hero);
-            if (hero_disponibles[hero - 1] == 1){
-                hero_disponibles[hero - 1] = 0;
-                test = 1;
-            }else{
-            	printf("Choix impossible\n");
-            }
-        }
 
-        //Choix action
-        switch (hero) {
-            case 1:
-                test = 0;
-                while (test == 0){
-                	display(23,hero,0);
-                    display(2,0,0);
-                    scanf("%d",&choix);
-                    if (mp >= 10) {
-                    	test = 1;
-                    }else{
-                    	if (mp >= 5){
-                    		if (choix != 4) {
-                    			test = 1;
-                    		}
-                    	}else{
-                    		if ((choix == 1) || (choix == 2)){
-                    			test = 1;
-                    		}else{
-                    			display(24,0,0);
-                    		}
-                    	}
-                    }
-                }
-                test = 0;
-                choice_p(hero,monstre,choix);
-                break;
-
-            case 2:
-                test = 0;
-                while (test == 0){
-                	display(23,hero,0);
-                    display(3,0,0);
-                    scanf("%d",&choix);
-                    if (mp >= 5) {
-                    	test = 1;
-                    }else{
-                    	if (mp >= 1){
-                    		if (choix != 4) {
-                    			test = 1;
-                    		}
-                    	}else{
-                    		if ((choix == 1) || (choix == 2)){
-                    			test = 1;
-                    		}else{
-                    			display(24,0,0);
-                    		}
-                    	}
-                    }
-                }
-                test = 0;
-                choice_p(hero,monstre,choix);
-                break;
-
-            case 3: 
-                test = 0;
-                while (test == 0){
-                	display(23,hero,0);
-                    display(4,0,0);
-                    scanf("%d",&choix);
-                    if (mp >= 5) {
-                    	test = 1;
-                    }else{
-                    	if (mp <= 5){
-                    		if ((choix == 1) || (choix == 2)){
-                    			test = 1;
-                    		}else{
-                    			display(24,0,0);
-                    		}
-                    	}
-                    }
-                }
-                test = 0;
-                choice_p(hero,monstre,choix);
-                break;
-            case 4:
-                test = 0;
-                while (test == 0){
-                	display(23,hero,0);
-                    display(5,0,0);
-                    scanf("%d",&choix);
-                    if (mp >= 8) {
-                    	test = 1;
-                    }else{
-                    	if (mp >= 3){
-                    		if (choix != 4) {
-                    			test = 1;
-                    		}
-                    	}else{
-                    		if ((choix == 1) || (choix == 2)){
-                    			test = 1;
-                    		}else{
-                    			display(24,0,0);
-                    		}
-                    	}
-                    }
-                }
-                test = 0;
-                choice_p(hero,monstre,choix);
-                break;
+    //Choix hero
+    if (paladin.pv == 0){
+    	hero_disponibles[0] = 0;
+    }
+    if (archer.pv == 0){
+    	hero_disponibles[1] = 0;
+    }
+    if (mage.pv == 0){
+    	hero_disponibles[2] = 0;
+    }
+    if (barbare.pv == 0){
+        hero_disponibles[3] = 0;
+    }
+    while (test == 0){
+        display(22,0,0);
+        scanf("%d",&hero);
+        if (hero_disponibles[hero - 1] == 1){
+            hero_disponibles[hero - 1] = 0;
+            test = 1;
+        }else{
+        	printf("Choix impossible\n");
         }
     }
-    //Riposte monstre
-
+    //Choix action
+    switch (hero) {
+        case 1:
+            test = 0;
+            while (test == 0){
+            	display(23,hero,0);
+                display(2,0,0);
+                scanf("%d",&choix);
+                if (mp >= 10) {
+                	test = 1;
+                }else{
+                	if (mp >= 5){
+                		if (choix != 4) {
+                			test = 1;
+                		}
+                	}else{
+                		if ((choix == 1) || (choix == 2)){
+                			test = 1;
+                		}else{
+                			display(24,0,0);
+                		}
+                	}
+                }
+            }
+            monstre = monster_designated();
+            test = 0;
+            choice_p(hero,monstre,choix);
+            break;
+        case 2:
+            test = 0;
+            while (test == 0){
+            	display(23,hero,0);
+                display(3,0,0);
+                scanf("%d",&choix);
+                if (mp >= 5) {
+                	test = 1;
+                }else{
+                	if (mp >= 1){
+                		if (choix != 4) {
+                			test = 1;
+                		}
+                	}else{
+                		if ((choix == 1) || (choix == 2)){
+                			test = 1;
+                		}else{
+                			display(24,0,0);
+                		}
+                	}
+                }
+            }
+            test = 0;
+            choice_p(hero,monstre,choix);
+            break;
+        case 3: 
+            test = 0;
+            while (test == 0){
+            	display(23,hero,0);
+                display(4,0,0);
+                scanf("%d",&choix);
+                if (mp >= 5) {
+                	test = 1;
+                }else{
+                	if (mp <= 5){
+                		if ((choix == 1) || (choix == 2)){
+                			test = 1;
+                   		}else{
+                   			display(24,0,0);
+                   		}
+                   	}
+                   }
+            }
+            test = 0;
+            choice_p(hero,monstre,choix);
+            break;
+        case 4:
+            test = 0;
+            while (test == 0){
+            	display(23,hero,0);
+                display(5,0,0);
+                scanf("%d",&choix);
+                if (mp >= 8) {
+                	test = 1;
+                }else{
+                	if (mp >= 3){
+                		if (choix != 4) {
+                			test = 1;
+                		}
+                	}else{
+                		if ((choix == 1) || (choix == 2)){
+                			test = 1;
+                		}else{
+                			display(24,0,0);
+                		}
+                	}
+                }
+            }
+            test = 0;
+            choice_p(hero,monstre,choix);
+            break;
+    }
 }
 
 
+//chaque tour
+int tour(manche){
+	
+    
+
+    if (manche <= 5){
+    	//2 d'affil
+    	choose();
+    	choose();
+    	//riposte
+    }else if (manche <= 9){
+    	//hero
+    	choose();
+    	//monstre
+    	//hero
+    	choose();
+    	//monstre
+    }else{
+    	//hero
+    	choose();
+    	//monstre
+    	//hero
+    	choose();
+    	//monstre
+    	//monstre
+    }
+
+    //Riposte monstre
+
+}
 int main() {
 	srand(time(NULL));
-	int test = 1;
+	int test = 0;
 	int tours = 0;
     //boucle des manches
     for (int manche = 0; manche < 10; manche++){
  		//debut manche
-    	select_monstre();
+ 		tours = 0;
+ 		test = 0;
+    	select_monstre(manche);
     	heros paladin = {150,150,30,0,0,30,0.2};
     	heros archer = {80,80,30,0,0,3,40};
     	heros mage = {100,100,30,0,0,10,4};
     	heros barbare = {120,120,50,0,0,1.5,2};
 
     	//boucle des tours
-    	while ((test != 0)/*||(Tous les monstres en vie)*/){
+    	while (test == 0)/*||(Tous les monstres en vie)*/{
     		tours++;
     		if (tours < 10){
     			display(27,1,tours);
     		}else{
     			display(27,2,tours);
     		}
-    		tour();
+    		tour(manche);
     	    //compte le nombre de heros en vie et attribue du mana en conséquence
-    	    test = mana();
-
+    	    test = 1;//mana();
     	}
     }
   return 0;
