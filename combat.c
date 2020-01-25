@@ -2,7 +2,6 @@
 #include <stdlib.h> 
 #include <time.h> 
 //ici, il y aura les structures et les variables globales
-
 int damage_given = 0;
 int damage_taken = 0;
 int mp = 0;
@@ -26,6 +25,13 @@ heros archer = {80,80,30,0,0,3,40};
 heros mage = {100,100,30,0,0,10,4};
 heros barbare = {120,120,50,0,0,1.5,2};
 
+
+int random_nbr (int min, int max){
+	int nbr = 0;
+	nbr = (min + (rand () % (max + 1 - min)));
+	printf("\n %d \n",nbr);
+	return nbr;
+}
 
 //Choix du monstre selon la progression du joueur
 int select_monstre(){
@@ -155,10 +161,12 @@ int display(int code, int hero, int monstre){
         case 16 :
         	printf("Le mage tente en vain d'endormir ");
         	display(7,0,monstre);
+        	printf("\n");
         	break;
         case 17 :
         	printf("Le mage endore ");
         	display(7,0,monstre);
+        	printf("\n");
         	break;
         case 18 :
         	printf("Le Barbare plante son epee de toutes ses forces dans ");
@@ -196,6 +204,18 @@ int display(int code, int hero, int monstre){
        	case 25 :
        		printf("Mana : %d \n",mp);
        		break;
+       	case 26 :
+       		printf("Vous gagnez %d mp \n",hero);
+       		break;
+       	case 27 :
+       		if (hero == 1){
+       			//1 digits
+       			printf("---------- Debut d'un Nouveau Tour ----------\n------------------ Tour %d -------------------\n",monstre);
+       		}else{
+       			//2 digits
+       			printf("---------- Debut d'un Nouveau Tour ----------\n------------------ Tour %d ------------------\n",monstre);
+       		}
+       		break;
     }
 }
 
@@ -208,17 +228,21 @@ int paladin_spe1(){
    		if (choix_paladin == 2){
     		if (archer.pv != 0){
     			archer.pv += paladin.spe1;
+    			test = 1;
     		}
     	}else if (choix_paladin == 3){
     		if (mage.pv != 0){
     			mage.pv += paladin.spe1;
+    			test = 1;
     		}
     	}else if (choix_paladin == 4){
     		if (barbare.pv != 0){
     			barbare.pv += paladin.spe1;
+    			test = 1;
     		}
     	}else{
     		paladin.pv += paladin.spe1;
+    		test = 1;
     	}	
     }
 }
@@ -231,14 +255,17 @@ int paladin_spe2(){
    		if (choix_paladin == 2){
     		if (archer.pv == 0){
     			archer.pv = archer.pv_max * paladin.spe2;
+    			test = 1;
     		}
     	}else if (choix_paladin == 3){
     		if (mage.pv == 0){
     			mage.pv = mage.pv_max * paladin.spe2;
+    			test = 1;
     		}
     	}else if (choix_paladin == 4){
     		if (barbare.pv == 0){
     			barbare.pv = barbare.pv_max * paladin.spe2;
+    			test = 1;
     		}
     	}
     }
@@ -251,27 +278,34 @@ int archer_spe2(monstre){
 	}
 }
 int mage_spe1(){
+	int test = 0;
 	int choix_mage = 0;
 	display(14,0,0);
 	scanf("%d",&choix_mage);
-	switch (choix_mage){
-		case 1:
-			paladin.pv += mage.spe1;
-			paladin.poison = 0;
-			//paladin.autre
-			break;
-		case 2:
-			archer.pv += mage.spe1;
-			archer.poison = 0;
-			break;
-		case 3:
-			mage.pv += mage.spe1;
-			mage.poison = 0;
-			break;
-		case 4:
-			barbare.pv += mage.spe1;
-			barbare.poison = 0;
-			break;
+	while (test == 0){
+		switch (choix_mage){
+			case 1:
+				paladin.pv += mage.spe1;
+				paladin.poison = 0;
+				//paladin.autre
+				test = 1;
+				break;
+			case 2:
+				archer.pv += mage.spe1;
+				archer.poison = 0;
+				test = 1;
+				break;
+			case 3:
+				mage.pv += mage.spe1;
+				mage.poison = 0;
+				test = 1;
+				break;
+			case 4:
+				barbare.pv += mage.spe1;
+				barbare.poison = 0;
+				test = 1;
+				break;
+		}
 	}
 	display(15,choix_mage,0);
 }
@@ -338,7 +372,7 @@ int choice_p(int hero, int monstre, int choix) {
     			case 3:
     				//esquive
     				damage_given = 0;
-    				chance = (rand() % (archer.spe1)+1);
+    				chance = random_nbr(1,archer.spe1);
     				if (chance == 1){
     					return 1000;
     					display(11,0,monstre);
@@ -382,8 +416,8 @@ int choice_p(int hero, int monstre, int choix) {
     				break;
     			case 4:
     				//somnifère
-    				chance = (rand() % (mage.spe2)+1);
-    				if (chance = 1){
+    				chance = random_nbr(1,mage.spe2);
+       				if (chance == 1){
     					display(17,0,monstre);
     					mage_spe2(monstre);
     				}else{
@@ -422,8 +456,8 @@ int choice_p(int hero, int monstre, int choix) {
     				mp -= 6;
     				damage_given = barbare.atk * barbare.spe2;
     				display(19,0,monstre);
-    				chance = (rand() % (3)+1);
-    				if (chance = 1){
+    				chance = random_nbr(1,3);
+    				if (chance == 1){
     					barbare.pv -= barbare.atk;
     					display(20,0,monstre);
     					return 0.5;
@@ -442,6 +476,25 @@ int choice_m(monstre,choix,atk) {
 
 }
 
+//attribution de mana en fin de tour
+int mana(){
+	int cumul = 0;
+	if (paladin.pv > 0){
+		cumul++;
+	}
+	if (archer.pv > 0){
+		cumul++;
+	}
+	if (mage.pv > 0){
+		cumul++;
+	}
+	if (barbare.pv > 0){
+		cumul++;
+	}
+	mp = mp + cumul;
+	display(26,cumul,0);
+	return cumul;
+}
 //chaque tour
 int tour(){
 	int hero = 0;
@@ -580,22 +633,38 @@ int tour(){
                 choice_p(hero,monstre,choix);
                 break;
         }
-        //Riposte monstre
     }
+    //Riposte monstre
+
 }
 
 
 int main() {
-    //boucle des monstres
-        select_monstre();
+	srand(time(NULL));
+	int test = 1;
+	int tours = 0;
+    //boucle des manches
+    for (int manche = 0; manche < 10; manche++){
+ 		//debut manche
+    	select_monstre();
+    	heros paladin = {150,150,30,0,0,30,0.2};
+    	heros archer = {80,80,30,0,0,3,40};
+    	heros mage = {100,100,30,0,0,10,4};
+    	heros barbare = {120,120,50,0,0,1.5,2};
 
-        //avancée des joueurs dans le jeu
-        //(re)set de la vie, des mp, etc
-        	heros paladin = {150,150,30,0,0,30,0.2};
-        	heros archer = {80,80,30,0,0,3,40};
-        	heros mage = {100,100,30,0,0,10,4};
-        	heros barbare = {120,120,50,0,0,1.5,2};
-        //boucle des tours
-            tour();
+    	//boucle des tours
+    	while ((test != 0)/*||(Tous les monstres en vie)*/){
+    		tours++;
+    		if (tours < 10){
+    			display(27,1,tours);
+    		}else{
+    			display(27,2,tours);
+    		}
+    		tour();
+    	    //compte le nombre de heros en vie et attribue du mana en conséquence
+    	    test = mana();
+
+    	}
+    }
   return 0;
 }
