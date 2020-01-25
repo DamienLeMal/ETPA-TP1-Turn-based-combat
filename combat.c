@@ -185,12 +185,17 @@ int display(int code, int hero, int monstre){
        		display(1,0,0);
        		break;
        	case 23 :
+       		display(25,0,0);
        		printf("Menu d'action pour ");
        		display(7,hero,0);
        		printf("\n");
        		break;
        	case 24 :
        		printf("Vous ne disposez pas de suffisament de mana ! \n");
+       		break;
+       	case 25 :
+       		printf("Mana : %d \n",mp);
+       		break;
     }
 }
 
