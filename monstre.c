@@ -201,6 +201,192 @@ monster monsterChoice(monster monster1, int niveau){
 
 
 
+switch (monstre){
+    case 1:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 2:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 3:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 4:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 5:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 6:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 7:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 8:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 9:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 10:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 11:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 12:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 14:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 15:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+    case 16:
+        switch(choix_monstre){
+            case 1:
+                //attaque
+                break;
+            case 2:
+                //défense
+                break;
+            case 3:
+                //attaque spé
+                break;
+        }
+}
+
+
+
+
 
 
 //chaque tour
