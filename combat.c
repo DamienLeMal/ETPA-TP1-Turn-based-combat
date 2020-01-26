@@ -20,6 +20,7 @@ typedef struct Heros {
 	int pv_max;
     int pv;
     int atk;
+    int defense;
     int poison;
     int stun;
     int spe1;
@@ -30,17 +31,33 @@ typedef struct Monstres {
     int pv_max;
     int pv;
     int atk;
+    int defense;
     int poison;
     int stun;
     int spe1;
 } monstres;
 
-heros paladin = {150,150,30,0,0,30,0.2};
-heros archer = {80,80,30,0,0,3,40};
-heros mage = {100,100,30,0,0,10,4};
-heros barbare = {120,120,50,0,0,1.5,2};
+heros paladin = {150,150,30,1,0,0,30,0.2};
+heros archer = {80,80,30,1,0,0,3,40};
+heros mage = {100,100,30,1,0,0,10,4};
+heros barbare = {120,120,50,1,0,0,1.5,2};
 
-
+monstres minotaure = {200, 200, 30, 1,0, 0, 30};
+monstres goule = {200, 200, 30, 1,0, 0, 30};
+monstres zombie = {200, 200, 30, 1,0, 0, 30};
+monstres vampire = {200, 200, 30, 1,0, 0, 30};
+monstres squelette = {200, 200, 30, 1,0, 0, 30};
+monstres orc = {200, 200, 30, 1,0, 0, 30};
+monstres troll = {200, 200, 30, 1,0, 0, 30};
+monstres gobelin = {200, 200, 30, 1,0, 0, 30};
+monstres elfe_noir = {200, 200, 30, 1,0, 0, 30};
+monstres golem = {200, 200, 30, 1,0, 0, 30};
+monstres araignee_geante = {200, 200, 30, 1,0, 0, 30};
+monstres licorne = {200, 200, 30, 1,0, 0, 30};
+monstres geant = {200, 200, 30, 1,0, 0, 30};
+monstres sorcier = {200, 200, 30, 1,0, 0, 30};
+monstres chien_loup = {200, 200, 30, 1,0, 0, 30};
+monstres serpent_geant = {200, 200, 30, 1,0, 0, 30};
 
 int random_nbr (int min, int max){
 	int nbr = 0;
@@ -62,11 +79,12 @@ int tirage(){
     	    tableau_monster[k] = stock;
     	}
 }
+
 //Choix du monstre selon la progression du joueur
 int select_monstre(manche){
     int nbr_monstre = 0;
 	int nombre = 0;
-	int niveau = 0;
+	float niveau = 1;
 	int tableau_monster[16];
     int k = 0;
     int stock = 0;
@@ -97,63 +115,131 @@ int select_monstre(manche){
     	fifteen = tableau_monster[14];
     	sixteen = tableau_monster[15];
     }
-	//switch (manche){}
-
-	monstres minotaure = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres goule = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres zombie = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres vampire = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres squellette = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres orc = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres troll = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres goblin = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres elfe_noir = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres golem = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres araignee_geante = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres licorne = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres geant = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres sorcier = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres chien_loup = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
-    monstres serpent_geant = {200 * niveau, 200 * niveau, 30 * niveau, 0, 0, 30 * niveau};
 //definition du nombre de monstre à sortir (en fonction de la manche)
     switch(manche){
     	case 1:
     		monstre1 = one;
+    		niveau = 1;
     		break;
     	case 2:
     		monstre1 = two;
+    		niveau = 1.25;
     		break;
     	case 3:
     		monstre1 = three;
+    		niveau = 1.5;
     		break;
     	case 4:
     		monstre1 = four;
+    		niveau = 1.75;
     		break;
     	case 5:
     		monstre1 = five;
+    		niveau = 2;
     		break;
     	case 6:
     		monstre1 = six;
     		monstre2 = seven;
+    		niveau = 1.5;
     		break;
     	case 7:
     		monstre1 = eight;
     		monstre2 = nine;
+    		niveau = 1.75;
     		break;
     	case 8:
     		monstre1 = ten;
     		monstre2 = eleven;
+    		niveau = 2;
     		break;
     	case 9:
     		monstre1 = twelve;
     		monstre2 = thirteen;
+    		niveau = 2.25;
     		break;
     	case 10:
     		monstre1 = fourteen;
     		monstre2 = fifteen;
     		monstre3 = sixteen;
+    		niveau = 1.75;
     		break;
     }
+    //stat des monstres en fonction du niveau
+
+    minotaure.pv_max = 200 * niveau;
+    minotaure.pv = minotaure.pv_max;
+    minotaure.atk =	30 * niveau;
+    minotaure.spe1 = 30 * niveau;
+
+    goule.pv_max = 200 * niveau;
+    goule.pv = goule.pv_max;
+    goule.atk =	30 * niveau;
+    goule.spe1 = 30 * niveau;
+
+    zombie.pv_max = 200 * niveau;
+    zombie.pv = zombie.pv_max;
+    zombie.atk =	30 * niveau;
+    zombie.spe1 = 30 * niveau;
+
+    vampire.pv_max = 200 * niveau;
+    vampire.pv = vampire.pv_max;
+    vampire.atk =	30 * niveau;
+    vampire.spe1 = 30 * niveau;
+
+    squelette.pv_max = 200 * niveau;
+    squelette.pv = squelette.pv_max;
+    squelette.atk =	30 * niveau;
+    squelette.spe1 = 30 * niveau;
+
+    orc.pv_max = 200 * niveau;
+    orc.pv = orc.pv_max;
+    orc.atk =	30 * niveau;
+    orc.spe1 = 30 * niveau;
+
+    troll.pv_max = 200 * niveau;
+    troll.pv = troll.pv_max;
+    troll.atk =	30 * niveau;
+    troll.spe1 = 30 * niveau;
+
+    gobelin.pv_max = 200 * niveau;
+    gobelin.pv = gobelin.pv_max;
+    gobelin.atk =	30 * niveau;
+    gobelin.spe1 = 30 * niveau;
+
+    elfe_noir.pv_max = 200 * niveau;
+    elfe_noir.pv = elfe_noir.pv_max;
+    elfe_noir.atk =	30 * niveau;
+    elfe_noir.spe1 = 30 * niveau;
+
+    golem.pv_max = 200 * niveau;
+    golem.pv = golem.pv_max;
+    golem.atk =	30 * niveau;
+    golem.spe1 = 30 * niveau;
+
+    araignee_geante.pv_max = 200 * niveau;
+    araignee_geante.pv = araignee_geante.pv_max;
+    araignee_geante.atk =	30 * niveau;
+    araignee_geante.spe1 = 30 * niveau;
+
+    licorne.pv_max = 200 * niveau;
+    licorne.pv = licorne.pv_max;
+    licorne.atk =	30 * niveau;
+    licorne.spe1 = 30 * niveau;
+
+    geant.pv_max = 200 * niveau;
+    geant.pv = geant.pv_max;
+    geant.atk =	30 * niveau;
+    geant.spe1 = 30 * niveau;
+
+    sorcier.pv_max = 200 * niveau;
+    sorcier.pv = sorcier.pv_max;
+    sorcier.atk =	30 * niveau;
+    sorcier.spe1 = 30 * niveau;
+
+    chien_loup.pv_max = 200 * niveau;
+    chien_loup.pv = chien_loup.pv_max;
+    chien_loup.atk =	30 * niveau;
+    chien_loup.spe1 = 30 * niveau;
 }
     
    
@@ -221,7 +307,7 @@ int display(int code, int hero, int monstre){
         			printf("le Vampire");
         			break;
         		case 5 :
-        			printf("le Squellette");
+        			printf("le Squelette");
         			break;
         		case 6 :
         			printf("l'Orc");
@@ -382,29 +468,118 @@ int display(int code, int hero, int monstre){
        		if (monstre3 != 0){
        			printf("[1] Attaquer ");
        			display(7,0,monstre1);
+       			display(30,0,monstre1);
        			printf("\n");
        			printf("[2] Attaquer ");
        			display(7,0,monstre2);
+       			display(30,0,monstre2);
        			printf("\n");
        			printf("[3] Attaquer ");
        			display(7,0,monstre3);
+       			display(30,0,monstre3);
        			printf("\n");
        		}else if (monstre2 != 0){
        			printf("[1] Attaquer ");
        			display(7,0,monstre1);
+       			display(30,0,monstre1);
        			printf("\n");
        			printf("[2] Attaquer ");
        			display(7,0,monstre2);
+       			display(30,0,monstre2);
        			printf("\n");
        		}else{
        			printf("[1] Attaquer ");
        			display(7,0,monstre1);
+       			display(30,0,monstre1);
        			printf("\n");
        		}
        		break;
+       	case 29 :
+       		display(7,0,monstre);
+       		printf(" prend %d points de degats ! \n",damage_given);
+       		break;
+		case 30 : //affiche les pv des monstres
+			switch (monstre){
+        		case 1 :
+        			printf(" %d / %d",minotaure.pv,minotaure.pv_max);
+        			break;
+        		case 2 :
+        			printf(" %d / %d",goule.pv,goule.pv_max);
+        			break;
+        		case 3 :
+        			printf(" %d / %d",zombie.pv,zombie.pv_max);
+        			break;
+        		case 4 :
+        			printf(" %d / %d",vampire.pv,vampire.pv_max);
+        			break;
+        		case 5 :
+        			printf(" %d / %d",squelette.pv,squelette.pv_max);
+        			break;
+        		case 6 :
+        			printf(" %d / %d",orc.pv,orc.pv_max);
+        			break;
+        		case 7 :
+        			printf(" %d / %d",troll.pv,troll.pv_max);
+        			break;
+        		case 8 :
+        			printf(" %d / %d",gobelin.pv,gobelin.pv_max);
+        			break;
+        		case 9 :
+        			printf(" %d / %d",elfe_noir.pv,elfe_noir.pv_max);
+        			break;
+        		case 10 :
+        			printf(" %d / %d",golem.pv,golem.pv_max);
+        			break;
+        		case 11 :
+        			printf(" %d / %d",araignee_geante.pv,araignee_geante.pv_max);
+        			break;
+        		case 12 :
+        			printf(" %d / %d",licorne.pv,licorne.pv_max);
+        			break;
+        		case 13 :
+        			printf(" %d / %d",geant.pv,geant.pv_max);
+        			break;
+        		case 14 :
+        			printf(" %d / %d",sorcier.pv,sorcier.pv_max);
+        			break;
+        		case 15 :
+        			printf(" %d / %d",chien_loup.pv,chien_loup.pv_max);
+        			break;
+        		case 16 :
+        			printf(" %d / %d",serpent_geant.pv,serpent_geant.pv_max);
+        			break;
+        	}
+        	break;
+  	}
+}    	
+int monster_designated(){
+    int test = 0;
+	int monster_choosen = 0;
+	display(28,0,0);
+	while (test == 0){
+		scanf("%d",&monster_choosen);
+		if (monstre3 != 0){
+       			if ((monster_choosen <= 3)&&(monster_choosen >= 1)){
+       				test = 1;
+       			}
+       	}else if (monstre2 != 0){
+       		if ((monster_choosen <= 2)&&(monster_choosen >= 1)){
+       			test = 1;
+       		}
+       	}else{
+       		if (monster_choosen == 1){
+       			test = 1;
+       		}
+       	}
+    }
+    if (monster_choosen == 1){
+    	return monstre1;
+    }else if (monster_choosen == 2){
+    	return monstre2;
+    }else if (monster_choosen == 1){
+    	return monstre3;
     }
 }
-
 int paladin_spe1(){
 	int test = 0;
    	int choix_paladin = 0;
@@ -517,6 +692,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = paladin.atk;
     				display(6,hero,monstre);
+    				hit_monster(monstre);
     				return 1;
     				break;
     			case 2:
@@ -549,6 +725,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = archer.atk;
     				display(6,hero,monstre);
+    				hit_monster(monstre);
     				return 1;
     				break;
     			case 2:
@@ -576,6 +753,7 @@ int choice_p(int hero, int monstre, int choix) {
     				damage_given = archer.atk * archer.spe2;
     				archer_spe2(monstre);
     				display(13,0,monstre);
+    				hit_monster(monstre);
     				mp -= 5;
     				return 1;
     				break;
@@ -589,6 +767,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = mage.atk;
     				display(6,hero,monstre);
+    				hit_monster(monstre);
     				return 1;
     				break;
     			case 2:
@@ -628,6 +807,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = barbare.atk;
     				display(6,hero,monstre);
+    				hit_monster(monstre);
     				return 1;
     				break;
     			case 2:
@@ -641,6 +821,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = barbare.atk * barbare.spe1;
     				display(18,0,monstre);
+    				hit_monster(monstre);
     				mp -= 3;
     				return 1;
     				break;
@@ -650,6 +831,7 @@ int choice_p(int hero, int monstre, int choix) {
     				mp -= 6;
     				damage_given = barbare.atk * barbare.spe2;
     				display(19,0,monstre);
+    				hit_monster(monstre);
     				chance = random_nbr(1,3);
     				if (chance == 1){
     					barbare.pv -= barbare.atk;
@@ -689,34 +871,76 @@ int mana(){
 	display(26,cumul,0);
 	return cumul;
 }
-int monster_designated(){
-    int test = 0;
-	int monster_choosen = 0;
-	display(28,0,0);
-	while (test == 0){
-		scanf("%d",&monster_choosen);
-		if (monstre3 != 0){
-       			if ((monster_choosen <= 3)&&(monster_choosen >= 1)){
-       				test = 1;
-       			}
-       	}else if (monstre2 != 0){
-       		if ((monster_choosen <= 2)&&(monster_choosen >= 1)){
-       			test = 1;
-       		}
-       	}else{
-       		if (monster_choosen == 1){
-       			test = 1;
-       		}
-       	}
-    }
-    if (monster_choosen == 1){
-    	return monstre1;
-    }else if (monster_choosen == 2){
-    	return monstre2;
-    }else if (monster_choosen == 1){
-    	return monstre3;
+//
+hit_monster(monstre){
+	switch(monstre){
+		case 1: 
+ 			minotaure.pv -= damage_given/minotaure.defense;
+ 			display(29,0,monstre);
+        	break;
+        case 2: 
+            goule.pv -= damage_given/goule.defense;
+            display(29,0,monstre);
+        	break;
+        case 3: 
+            zombie.pv -= damage_given/zombie.defense;
+            display(29,0,monstre);
+        	break;
+        case 4:
+            vampire.pv -= damage_given/vampire.defense;
+            display(29,0,monstre);
+        	break;
+        case 5: 
+            squelette.pv -= damage_given/squelette.defense;
+            display(29,0,monstre);
+        	break;
+        case 6: 
+            orc.pv -= damage_given/orc.defense;
+            display(29,0,monstre);
+        	break;
+        case 7: 
+            troll.pv -= damage_given/troll.defense;
+            display(29,0,monstre);
+        	break;
+        case 8:
+            gobelin.pv -= damage_given/gobelin.defense;
+            display(29,0,monstre);
+        	break;
+        case 9: 
+            elfe_noir.pv -= damage_given/elfe_noir.defense;
+            display(29,0,monstre);
+        	break;
+        case 10: 
+            golem.pv -= damage_given/golem.defense;
+            display(29,0,monstre);
+        	break;
+        case 11: 
+            araignee_geante.pv -= damage_given/araignee_geante.defense;
+            display(29,0,monstre);
+        	break;
+        case 12:
+            licorne.pv -= damage_given/licorne.defense;
+            display(29,0,monstre);
+        	break;
+        case 13: 
+            geant.pv -= damage_given/geant.defense;
+            display(29,0,monstre);
+        	break;
+        case 14: 
+            sorcier.pv -= damage_given/sorcier.defense;
+            display(29,0,monstre);
+        	break;
+        case 15: 
+            chien_loup.pv -= damage_given/chien_loup.defense;
+            display(29,0,monstre);
+        	break;
+        case 16:
+            serpent_geant.pv -= damage_given/serpent_geant.defense;
+            display(29,0,monstre);
+        	break;
     }
 }
+
 //Choix d'un hero et de son action
 int choose(){
 	int hero = 0;
@@ -777,7 +1001,7 @@ int choose(){
                 }
             }
             test = 0;
-            choice_p(hero,monstre,choix);
+            paladin.defense = choice_p(hero,monstre,choix);
             break;
         case 2:
             test = 0;
@@ -802,7 +1026,7 @@ int choose(){
                 }
             }
             test = 0;
-            choice_p(hero,monstre,choix);
+            archer.defense = choice_p(hero,monstre,choix);
             break;
         case 3: 
             test = 0;
@@ -823,7 +1047,7 @@ int choose(){
                    }
             }
             test = 0;
-            choice_p(hero,monstre,choix);
+            mage.defense = choice_p(hero,monstre,choix);
             break;
         case 4:
             test = 0;
@@ -848,12 +1072,10 @@ int choose(){
                 }
             }
             test = 0;
-            choice_p(hero,monstre,choix);
+            barbare.defense = choice_p(hero,monstre,choix);
             break;
     }
 }
-
-
 //chaque tour
 int tour(manche){
     if (manche <= 5){
@@ -877,9 +1099,7 @@ int tour(manche){
     	//monstre
     	//monstre
     }
-
     //Riposte monstre
-
 }
 int main() {
 	srand(time(NULL));
