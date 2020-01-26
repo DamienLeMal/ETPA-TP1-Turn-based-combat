@@ -39,7 +39,7 @@ monster monsterChoice(monster monster1, int niveau){
         monster squelette = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster orc = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster troll = {200*niveau,200*niveau,30,0,0,30*niveau};
-        monster goblin = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster gobelin = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster elfe_noir = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster golem = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster araignee_geante = {200*niveau,200*niveau,30,0,0,30*niveau};
@@ -120,9 +120,9 @@ monster monsterChoice(monster monster1, int niveau){
         break;
 
         case 8:
-            monster1 = goblin;
+            monster1 = gobelin;
             printf("\n");
-            printf("vie:%d \n", goblin.pv);
+            printf("vie:%d \n", gobelin.pv);
 
             current_monster8 = 8
         break;
@@ -207,7 +207,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = minotaure.atk;
-                printf("Le minotaure attaque, ce qui inflige %d de degats a tout les heros\n" , minotaure.atk );
                 break;
             case 2:
                 //défense
@@ -225,7 +224,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = goule.atk;
-                printf(" La goule attaque, elle inflige %d de degats a tout les heros", goule.atk);
                 break;
             case 2:
                 //défense
@@ -242,7 +240,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = zombie.atk;
-                printf("Le zombie attaque, il inflige %d de degats a tout les heros", zombie.atk);
                 break;
             case 2:
                 //défense
@@ -251,6 +248,7 @@ switch (monstre){
             case 3:
                 //attaque spé
                 hero.infection = 1
+                printf("Le zombie a touche un hero, il est maintenant infecte\n");
                 break;
         }
     case 4:
@@ -258,7 +256,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = vampire.atk;
-                printf(" Le vampire attaque, il inflige %d de degats a tout les heros", vampire.atk);
                 break;
             case 2:
                 //défense
@@ -268,6 +265,7 @@ switch (monstre){
                 //attaque spé
                 damage_taken = 20;
                 vampire.pv = vampire.pv + 20;
+                printf("le vampire a vole de la vie a un hero\n");
                 break;
         }
     case 5:
@@ -275,14 +273,13 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = squelette.atk;
-                printf(" Le squelette attaque, il inflige %d de degats a tout les heros", squelette.atk);
                 break;
             case 2:
                 //défense
                 damage_taken = 0;
                 break;
             case 3:
-                //attaque spé
+                //attaque spé qu'il  faut que Damien fasse
                 break;
         }
     case 6:
@@ -290,7 +287,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = orc.atk;
-                printf(" Le orc attaque, il inflige %d de degats a tout les heros", orc.atk);
                 break;
             case 2:
                 //défense
@@ -299,6 +295,7 @@ switch (monstre){
             case 3:
                 //attaque spé
                 damage_taken = orc.atk*2
+                printf("L'orc a fais une attaques plus puissante que d'habitude, les heros prennent 2 fois plus de degats\n", );
                 break;
         }
     case 7:
@@ -306,7 +303,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = troll.atk;
-                printf(" Le troll attaque, il inflige %d de degats a tout les heros", troll.atk);
                 break;
             case 2:
                 //défense
@@ -315,14 +311,14 @@ switch (monstre){
             case 3:
                 //attaque spé
                 damage_taken = troll.atk*2
+                printf("Le troll n'est pas content, il fais donc une attaque surpuissante qui inflige 2 fois plus de degats\n");
                 break;
         }
     case 8:
         switch(choix_monstre){
             case 1:
                 //attaques
-                damage_taken = goblin.atk;
-                printf(" Le goblin attaque, il inflige %d de degats a tout les heros", goblin.atk);
+                damage_taken = gobelin.atk;
                 break;
             case 2:
                 //défense
@@ -330,6 +326,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                printf("Le gobelin a reussi sont esquive, il ne recoit donc aucun degats\n");
                 return 1000
                 break;
         }
@@ -338,7 +335,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = elfe_noir.atk;
-                printf(" L'elfe noir attaque, il inflige %d de degats a tout les heros", elfe_noir.atk);
                 break;
             case 2:
                 //défense
@@ -348,6 +344,7 @@ switch (monstre){
                 //attaque spé
                 hero= hero_designated();
                 elfe_noir.atk = elfe_noir.atk* // nombre de hero restant
+                printf("L'elfe noir a attaque avec precision, toute sont attaque et rediriger vers %d. \n", hero_designated);
                 break;
         }
     case 10:
@@ -355,7 +352,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = golem.atk;
-                printf(" Le golem attaque, il inflige %d de degats a tout les heros", golem.atk);
                 break;
             case 2:
                 //défense
@@ -364,6 +360,7 @@ switch (monstre){
             case 3:
                 //attaque spé
                 hero.stun = 1;
+                printf("Le golem a etourdit un hero. Ce hero ne peut pas attaquer le tour prochain\n");
                 break;
         }
     case 11:
@@ -371,7 +368,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = araignee_geante.atk;
-                printf(" L'araignee geante attaque, elle inflige %d de degats a tout les heros", araignee_geante.atk);
                 break;
             case 2:
                 //défense
@@ -380,6 +376,7 @@ switch (monstre){
             case 3:
                 //attaque spé
                 hero.poison = 1;
+                printf("L'araignée géante a lancé son venin sur les heros. Ils sont tous pris de douleur qui leur enlève %d de point de vie\n", araignee_geante.atk);
                 break;
         }
     case 12:
@@ -387,7 +384,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = licorne.atk;
-                printf(" La licorne attaque, elle inflige %d de degats a tout les heros", licorne.atk);
                 break;
             case 2:
                 //défense
@@ -395,6 +391,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                printf("La licorne s'envole et esquive donc l'attaque. Elle ne recoit donc aucun degats");
                 return 1000
                 break;
         }
@@ -403,7 +400,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = geant.atk;
-                printf(" Le geant attaque, il inflige %d de degats a tout les heros", geant.atk);
                 break;
             case 2:
                 //défense
@@ -412,6 +408,7 @@ switch (monstre){
             case 3:
                 //attaque spé
                 geant.atk = geant.atk*3 //degats de zone sup
+                printf("Le geant s'est fais secouer par les heros, il est tres en colere. Ses dégats de zone sont 3 fois plus puissant, ceci affaiblie tres fortement nos heros.\n", );
                 break;
         }
     case 14:
@@ -419,7 +416,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = sorcier.atk;
-                printf(" Le sorcier attaque, il inflige %d de degats a tout les heros", sorcier.atk);
                 break;
             case 2:
                 //défense
@@ -428,7 +424,8 @@ switch (monstre){
             case 3:
                 //attaque spé
                  monstre= monstre_designated();
-                 monstre.pv = monstre.pv_max
+                 monstre.pv = monstre.pv+100;
+                 printf("Le sorcier a redonner de la vie a %d.\n", monstre_designated);
                 break;
         }
     case 15:
@@ -436,7 +433,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = chien_loup.atk;
-                printf(" Le chien loup attaque, il inflige %d de degats a tout les heros", chien_loup.atk);
                 break;
             case 2:
                 //défense
@@ -447,6 +443,7 @@ switch (monstre){
                 chien_loup.atk = chien_loup.atk*2
                 chien_loup.mp = chien_loup.mp*2
                 //si t"as d'autre idée de truc a boost
+                printf("Le chien loup, par l'odeur du sang, a ses capacites qui double. Tout a augmente sauf sa vie\n");
                 break;
         }
     case 16:
@@ -454,7 +451,6 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = serpent_geant.atk;
-                printf(" Le serpent_geant attaque, il inflige %d de degats a tout les heros", serpent_geant.atk);
                 break;
             case 2:
                 //défense
@@ -462,7 +458,9 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                monstre= monstre_designated();
                 hero.burn = 1;
+                printf("Le venin du serpent geant est si puissant que ca brule %d. \n", monstre_designated );
                 break;
         }
 }
