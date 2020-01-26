@@ -1,3 +1,49 @@
+/*
+Préface : 
+Le code fonctionne mais n'a été testé que sur un compileur de C en ligne
+Un seul bug trouvé mais inexpliquable qui consiste en des opérations qui ne devraient jamais avoir lieu à ce moment, je n'ai pas trouvé la cause de ce bug mais le compilateur freeze avant que le bug n'apparaisse
+
+On peut affronter plusieurs monstres à la fois, mais pas avant d'avoir passer la 5ème manche puis le niveau 10 final nous permet même d'en affronter 3 en même temps
+l'xp arrive lorsque l'on tue un monstre (plus d'xp pour celui qui l'achève)
+
+
+Il reste à :
+-modifier les valeurs des statistiques des monstres dans les var globales ainsi que dans select_monstre
+-modifier les valeurs d'upgrade des compétences spéciales des heros dans amelioration()
+
+Aide à la navigation dans le code : fonctions et fonctions qu'elles contiennent
+ps : (hors display() qui est quasiment partout)
+
+main()
+	select_monstre()
+		random_nbr()
+	tour()
+		choose()
+			cumul()
+			choice_p()
+				hit_monster()
+					death()
+						side_xp()
+							xp()
+								amelioration()
+					end_m()
+				monster_designated()
+				paladin_spe1()
+				paladin_spe2()
+				archer_spe2()
+				mage_spe1()
+				mage_spe2()
+		choose_m()
+			random_nbr()
+			choice_m()
+				hit_hero()
+				hero_designated()
+					random_nbr()
+				monster_designated()
+		poison()
+	cumul()
+	monstre_mp()
+*/
 #include <stdio.h>
 #include <stdlib.h> 
 #include <time.h> 
@@ -12,9 +58,6 @@ int navigateur = 0;
 int check = 0;
 
 int one = 0,two = 0,three = 0,four = 0,five = 0,six = 0,seven = 0,eight = 0,nine = 0,ten = 0,eleven = 0,twelve = 0,thirteen = 0,fourteen = 0,fifteen = 0,sixteen = 0;
-//provisoire
-//int monstre = 11;
-//provisoire
 
 typedef struct Heros {
 	int pv_max;
@@ -24,7 +67,8 @@ typedef struct Heros {
     int poison;
     int stun;
     int spe1;
-    int spe2;
+    float spe2;
+    int xp;
 } heros;
 
 typedef struct Monstres {
@@ -35,49 +79,38 @@ typedef struct Monstres {
     int poison;
     int stun;
     int spe1;
+    int mp;
 } monstres;
 
-heros paladin = {150,150,30,1,0,0,30,0.2};
-heros archer = {80,80,30,1,0,0,3,40};
-heros mage = {100,100,30,1,0,0,10,4};
-heros barbare = {120,120,50,1,0,0,1.5,2};
+heros paladin = {150,150,30,1,0,0,30,0.2,0};
+heros archer = {80,80,30,1,0,0,3,40,0};
+heros mage = {100,100,30,1,0,0,10,4,0};
+heros barbare = {120,120,50,1,0,0,1.5,2,0};
 
-monstres minotaure = {200, 200, 30, 1,0, 0, 30};
-monstres goule = {200, 200, 30, 1,0, 0, 30};
-monstres zombie = {200, 200, 30, 1,0, 0, 30};
-monstres vampire = {200, 200, 30, 1,0, 0, 30};
-monstres squelette = {200, 200, 30, 1,0, 0, 30};
-monstres orc = {200, 200, 30, 1,0, 0, 30};
-monstres troll = {200, 200, 30, 1,0, 0, 30};
-monstres gobelin = {200, 200, 30, 1,0, 0, 30};
-monstres elfe_noir = {200, 200, 30, 1,0, 0, 30};
-monstres golem = {200, 200, 30, 1,0, 0, 30};
-monstres araignee_geante = {200, 200, 30, 1,0, 0, 30};
-monstres licorne = {200, 200, 30, 1,0, 0, 30};
-monstres geant = {200, 200, 30, 1,0, 0, 30};
-monstres sorcier = {200, 200, 30, 1,0, 0, 30};
-monstres chien_loup = {200, 200, 30, 1,0, 0, 30};
-monstres serpent_geant = {200, 200, 30, 1,0, 0, 30};
+monstres minotaure = {200, 200, 30, 1,0, 0, 30,0};
+monstres goule = {200, 200, 30, 1,0, 0, 30,0};
+monstres zombie = {200, 200, 30, 1,0, 0, 30,0};
+monstres vampire = {200, 200, 30, 1,0, 0, 30,0};
+monstres squelette = {200, 200, 30, 1,0, 0, 30,0};
+monstres orc = {200, 200, 30, 1,0, 0, 30,0};
+monstres troll = {200, 200, 30, 1,0, 0, 30,0};
+monstres gobelin = {200, 200, 30, 1,0, 0, 30,0};
+monstres elfe_noir = {200, 200, 30, 1,0, 0, 30,0};
+monstres golem = {200, 200, 30, 1,0, 0, 30,0};
+monstres araignee_geante = {200, 200, 30, 1,0, 0, 30,0};
+monstres licorne = {200, 200, 30, 1,0, 0, 30,0};
+monstres geant = {200, 200, 30, 1,0, 0, 30,0};
+monstres sorcier = {200, 200, 30, 1,0, 0, 30,0};
+monstres chien_loup = {200, 200, 30, 1,0, 0, 30,0};
+monstres serpent_geant = {200, 200, 30, 1,0, 0, 30,0};
+
+//sert lors de la selection du hero dans choose()
+int hero_disponibles[4];
 
 int random_nbr (int min, int max){
 	int nbr = 0;
 	nbr = (min + (rand () % (max + 1 - min)));
 	return nbr;
-}
-
-int tirage(){
-    int tableau_monster[16];
-    int k = 0;
-    int stock = 0;
-    	for (int i = 0; i < 16; ++i){
-		    tableau_monster[i] = i + 1;
-    	}
-    	for (int i = 0; i < 16; ++i){
-    	    k = random_nbr(0,15);
-    	    stock = tableau_monster[i];
-    	    tableau_monster[i] = tableau_monster[k];
-    	    tableau_monster[k] = stock;
-    	}
 }
 
 //Choix du monstre selon la progression du joueur
@@ -553,21 +586,30 @@ int display(int code, int hero, int monstre){
         	printf(" prend %d points de degats !\n",monstre);
         	break;
         case 32 :
-        	display(7,0,monstre);
-        	print(" se met en position defensive \n");
+        	if (monstre == 0){
+        		display(7,0,monstre);
+        		printf(" se met en position defensive \n");
+        	}else{
+        		display(7,0,monstre);
+        		printf(" lance une attaque ! \n");
+        	}
         	break;
         case 33:
-        	print("Le minotaure fonce sur ");
+        	printf("Le Minotaure fonce sur ");
         	display(7,hero,0);
         	printf("\n");
         	break;
         case 34:
-        	printf("La goule esquive !\n");
+        	if (monstre == 0){
+        		printf("La Goule esquive !\n");
+        	}else{
+        		printf("Le Squelette esquive !\n");
+        	}
         	break;
         case 35:
-        	printf("Le zombie mord ")
+        	printf("Le zombie mord ");
         	display(7,hero,0);
-        	printf(" ! Il souffre d'une infection !\n")
+        	printf(" ! Il souffre d'une infection !\n");
         	break;
         case 36:
         	printf("Le Vampire vole %d ");
@@ -600,7 +642,7 @@ int display(int code, int hero, int monstre){
         	printf("La licorne utilise ses ailes cachées pour s'envoler et esquiver l'attaque !\n");
         	break;
         case 44:
-        	printf("Le Geant entre dans une colere noire et frappe tout autour de lui !\n")
+        	printf("Le Geant entre dans une colere noire et frappe tout autour de lui !\n");
         	break;
         case 45:
         	printf("Le sorcier utilise un sort de soin sur ");
@@ -616,11 +658,308 @@ int display(int code, int hero, int monstre){
         	printf(" ! Le venin parcourt son corps le blessant petit à petit !\n");
         	break;
         case 48:
-
+        	display(7,hero,0);
+        	printf(" n'est pas disponible\n");
         	break;
-
+        case 49:
+        	display(7,hero,0);
+        	printf(" gagne de l'xp : ");
+            switch(monstre){
+                case 1:
+                    printf("▓░░░░░░░░░\n");
+                    break;
+                case 2:
+                    printf("▓▓░░░░░░░░\n");
+                    break;
+                case 3:
+                    printf("▓▓▓░░░░░░░\n");
+                    break;
+                 case 4:
+                    printf("▓▓▓▓░░░░░░\n");
+                    break;
+                case 5:
+                    printf("▓▓▓▓▓░░░░░\n");
+                    break;
+                case 6:
+                    printf("▓▓▓▓▓▓░░░░\n");
+                    break;
+                case 7:
+                    printf("▓▓▓▓▓▓▓░░░\n");
+                    break;
+                case 8:
+                    printf("▓▓▓▓▓▓▓▓░░\n");
+                    break;
+                case 9:
+                    printf("▓▓▓▓▓▓▓▓▓░\n");
+                    break;
+                case 10:
+                    printf("▓▓▓▓▓▓▓▓▓▓\n");
+                    break;
+            }
+        	break;
+       	case 50:
+       		switch (hero){
+       			case 1:
+       				printf("Le Paladin monte d'un niveau !\nAmeliorer une competence speciale : [1] Soins - [2] Resurection\n");
+       				break;
+       			case 2:
+       				printf("L'Archer monte d'un niveau !\nAmeliorer une competence speciale : [1] Esquive - [2] Fleche Empoisone\n");
+       				break;
+       			case 3:
+       				printf("Le Mage monte d'un niveau !\nAmeliorer une competence speciale : [1] Guerison - [2] Somnifere\n");
+       				break;
+       			case 4:
+       				printf("Le Barbare monte d'un niveau !\nAmeliorer une competence speciale : [1] Frappe Sanglante - [2] Rage\n");
+       				break;
+       		}
+       		break;
+       	case 51 :
+       		printf("-------- Debut d'une Nouvelle Manche --------\n----------- Manche manche %d / 10 ------------\n");
+       		break;
+       	case 52 :
+       		printf("Vous avez deja utilise ");
+       		display(7,hero,0);
+       		printf(" ce tour !\n");
+       		break;
   	}
-}    	
+}
+int amelioration(hero){
+	int choix = 0;
+	display(50,hero,0);
+    scanf("%d",&choix);
+	switch (hero){
+    case 1:
+        if (choix == 1){
+            paladin.spe1 = paladin.spe1 * 2;
+        }else{
+            paladin.spe2 += 0.2;
+        }
+        paladin.xp = 0;
+        break;
+    case 2:
+        if (choix == 1){
+            archer.spe1++;
+        }else{
+            archer.spe2++;
+        }
+        archer.xp = 0;
+        break;
+    case 3:
+        if (choix == 1){
+            mage.spe1++;
+        }else{
+            mage.spe2++;
+        }
+        mage.xp = 0;
+        break;
+    case 4:
+        if (choix == 1){
+            barbare.spe1++;
+        }else{
+            barbare.spe2++;
+        }
+        barbare.xp = 0;
+        break;
+    }
+}
+int xp(hero){
+	switch(hero){
+		case 1:
+			switch (paladin.xp){
+				case 1:
+					display(49,hero,1);
+					break;
+				case 2:
+					display(49,hero,2);
+					break;
+				case 3:
+					display(49,hero,3);
+					break;
+				case 4:
+					display(49,hero,4);
+					break;
+				case 5:
+					display(49,hero,5);
+					break;
+				case 6:
+					display(49,hero,6);
+					break;
+				case 7:
+					display(49,hero,7);
+					break;
+				case 8:
+					display(49,hero,8);
+					break;
+				case 9:
+					display(49,hero,9);
+					break;
+				case 10:
+					display(49,hero,10);
+					amelioration(hero);
+					break;
+			}
+			break;
+		case 2:
+			switch (archer.xp){
+				case 1:
+					display(49,hero,1);
+					break;
+				case 2:
+					display(49,hero,2);
+					break;
+				case 3:
+					display(49,hero,3);
+					break;
+				case 4:
+					display(49,hero,4);
+					break;
+				case 5:
+					display(49,hero,5);
+					break;
+				case 6:
+					display(49,hero,6);
+					break;
+				case 7:
+					display(49,hero,7);
+					break;
+				case 8:
+					display(49,hero,8);
+					break;
+				case 9:
+					display(49,hero,9);
+					break;
+				case 10:
+					display(49,hero,10);
+					amelioration(hero);
+					break;
+			}
+			break;
+		case 3:
+			switch (mage.xp){
+				case 1:
+					display(49,hero,1);
+					break;
+				case 2:
+					display(49,hero,2);
+					break;
+				case 3:
+					display(49,hero,3);
+					break;
+				case 4:
+					display(49,hero,4);
+					break;
+				case 5:
+					display(49,hero,5);
+					break;
+				case 6:
+					display(49,hero,6);
+					break;
+				case 7:
+					display(49,hero,7);
+					break;
+				case 8:
+					display(49,hero,8);
+					break;
+				case 9:
+					display(49,hero,9);
+					break;
+				case 10:
+					display(49,hero,10);
+					amelioration(hero);
+					break;
+			}
+			break;
+		case 4:
+			switch (barbare.xp){
+				case 1:
+					display(49,hero,1);
+					break;
+				case 2:
+					display(49,hero,2);
+					break;
+				case 3:
+					display(49,hero,3);
+					break;
+				case 4:
+					display(49,hero,4);
+					break;
+				case 5:
+					display(49,hero,5);
+					break;
+				case 6:
+					display(49,hero,6);
+					break;
+				case 7:
+					display(49,hero,7);
+					break;
+				case 8:
+					display(49,hero,8);
+					break;
+				case 9:
+					display(49,hero,9);
+					break;
+				case 10:
+					display(49,hero,10);
+					amelioration(hero);
+					break;
+			}
+			break;
+    }
+}
+int side_xp(hero){
+	switch (hero){
+        	case 1:
+        		archer.xp += 2;
+        		mage.xp += 2;
+        		barbare.xp += 2;
+        		break;
+        	case 2:
+        		paladin.xp += 2;
+        		mage.xp += 2;
+        		barbare.xp += 2;
+        		break;
+        	case 3:
+        		paladin.xp += 2;
+        		archer.xp += 2;
+        		barbare.xp += 2;
+        		break;
+        	case 4:
+        		paladin.xp += 2;
+        		archer.xp += 2;
+        		mage.xp += 2;
+        		break;
+    }
+    xp(1);
+    xp(2);
+    xp(3);
+    xp(4);
+}
+//gere les morts chez les monstres et donne l'xp aux heros
+int death(int pv, int hero){
+    if(pv<=0){
+        switch (hero){
+        	case 1:
+        		paladin.xp += 4;
+        		side_xp(hero);
+        		break;
+        	case 2:
+        		archer.xp += 4;
+        		side_xp(hero);
+        		break;
+        	case 3:
+        		mage.xp += 4;
+        		side_xp(hero);
+        		break;
+        	case 4:
+        		barbare.xp += 4;
+        		side_xp(hero);
+        		break;
+        }
+        return 1;  
+    }
+    
+}
+
 int monster_designated(){
     int test = 0;
 	int monster_choosen = 0;
@@ -726,89 +1065,132 @@ hit_hero(hero){
 		}
 	}
 }
-//
-hit_monster(monstre){
+end_m(mort,monstre){
+	if (mort == 1){
+		if (monstre1 == monstre){
+			monstre1 = 0;
+		}else if (monstre2 == monstre){
+			monstre2 = 0;
+		}else if (monstre3 == monstre){
+			monstre3 = 0;
+		}
+	}
+}
+hit_monster(monstre,hero){
 	int oof = 0;
+	int mort = 0;
 	switch(monstre){
 		case 1:
 			oof = damage_given/minotaure.defense;
  			minotaure.pv -= oof;
  			display(29,oof,monstre);
+            mort = death(minotaure.pv,hero);
+ 			end_m(mort,monstre);
         	break;
         case 2:
         	oof = damage_given/goule.defense;
             goule.pv -= oof;
             display(29,oof,monstre);
+            mort = death(goule.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 3: 
         	oof = damage_given/zombie.defense;
             zombie.pv -= oof;
-            display(29,oof,monstre);
+            mort = display(29,oof,monstre);
+            mort = death(zombie.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 4:
         	oof = damage_given/vampire.defense;
             vampire.pv -= oof;
             display(29,oof,monstre);
+            mort = death(vampire.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 5: 
         	oof = damage_given/squelette.defense;
             squelette.pv -= oof;
             display(29,oof,monstre);
+            mort = death(squelette.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 6: 
         	oof = damage_given/orc.defense;
             orc.pv -= oof;
             display(29,oof,monstre);
+            mort = death(orc.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 7: 
         	oof = damage_given/troll.defense;
             troll.pv -= oof;
             display(29,oof,monstre);
+            mort = death(troll.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 8:
         	oof = damage_given/gobelin.defense;
             gobelin.pv -= oof;
             display(29,oof,monstre);
+            mort = death(gobelin.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 9: 
         	oof = damage_given/elfe_noir.defense;
             elfe_noir.pv -= oof;
             display(29,oof,monstre);
+            mort = death(elfe_noir.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 10:
         	oof = damage_given/golem.defense;
             golem.pv -= oof;
             display(29,oof,monstre);
+            mort = death(golem.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 11:
         	oof = damage_given/araignee_geante.defense;
             araignee_geante.pv -= oof;
             display(29,oof,monstre);
+            mort = death(araignee_geante.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 12:
         	oof = damage_given/licorne.defense;
             licorne.pv -= oof;
             display(29,oof,monstre);
-        	break;
+            mort = death(licorne.pv,hero);
+            end_m(mort,monstre);
+            break;
         case 13: 
         	oof = damage_given/geant.defense;
             geant.pv -= oof;
             display(29,oof,monstre);
+            mort = death(geant.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 14: 
         	oof = damage_given/sorcier.defense;
             sorcier.pv -= oof;
             display(29,oof,monstre);
+            mort = death(sorcier.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 15: 
         	oof = damage_given/chien_loup.defense;
             chien_loup.pv -= oof;
             display(29,oof,monstre);
+            mort = death(chien_loup.pv,hero);
+            end_m(mort,monstre);
         	break;
         case 16:
         	oof = damage_given/serpent_geant.defense;
             serpent_geant.pv -= oof;
             display(29,oof,monstre);
+            mort = death(serpent_geant.pv,hero);
+            end_m(mort,monstre);
         	break;
     }
 }
@@ -821,17 +1203,17 @@ int paladin_spe1(){
    		display(9,0,0);
    		scanf("%d",&choix_paladin);
    		if (choix_paladin == 2){
-    		if (archer.pv != 0){
+    		if (archer.pv > 0){
     			archer.pv += paladin.spe1;
     			test = 1;
     		}
     	}else if (choix_paladin == 3){
-    		if (mage.pv != 0){
+    		if (mage.pv > 0){
     			mage.pv += paladin.spe1;
     			test = 1;
     		}
     	}else if (choix_paladin == 4){
-    		if (barbare.pv != 0){
+    		if (barbare.pv > 0){
     			barbare.pv += paladin.spe1;
     			test = 1;
     		}
@@ -867,10 +1249,55 @@ int paladin_spe2(){
 }
 int archer_spe2(monstre){
 	switch (monstre){
-		case 1:
-			//zombie.poison = 1;
-			break;
-	}
+        case 1:
+            minotaure.poison = 1;
+            break;
+        case 2:
+            goule.poison = 1;
+            break;
+        case 3:
+            zombie.poison = 1;
+            break;
+        case 4:
+            vampire.poison = 1;
+            break;
+        case 5:
+            squelette.poison = 1;
+            break;
+        case 6:
+            orc.poison = 1;
+            break;
+        case 7:
+            troll.poison = 1;
+            break;
+        case 8:
+            gobelin.poison = 1;
+            break;
+        case 9:
+            elfe_noir.poison = 1;
+            break;
+        case 10:
+            golem.poison = 1;
+            break;
+        case 11:
+            araignee_geante.poison = 1;
+            break;
+        case 12:
+            licorne.poison = 1;
+            break;
+        case 13:
+            geant.poison = 1;
+            break;
+        case 14:
+            sorcier.poison = 1;
+            break;
+        case 15:
+            chien_loup.poison = 1;
+            break;
+        case 16:
+            serpent_geant.poison = 1;
+            break;
+    }
 }
 int mage_spe1(){
 	int test = 0;
@@ -882,22 +1309,25 @@ int mage_spe1(){
 			case 1:
 				paladin.pv += mage.spe1;
 				paladin.poison = 0;
-				//paladin.autre
+				paladin.stun = 0;
 				test = 1;
 				break;
 			case 2:
 				archer.pv += mage.spe1;
 				archer.poison = 0;
+				archer.stun = 0;
 				test = 1;
 				break;
 			case 3:
 				mage.pv += mage.spe1;
 				mage.poison = 0;
+				mage.stun = 0;
 				test = 1;
 				break;
 			case 4:
 				barbare.pv += mage.spe1;
 				barbare.poison = 0;
+				barbare.stun = 0;
 				test = 1;
 				break;
 		}
@@ -907,7 +1337,52 @@ int mage_spe1(){
 int mage_spe2(monstre){
 	switch (monstre){
 		case 1:
-			//zombie.stun = 1;
+			minotaure.stun = 2;
+			break;
+		case 2:
+			goule.stun = 2;
+			break;
+		case 3:
+			zombie.stun = 2;
+			break;
+		case 4:
+			vampire.stun = 2;
+			break;
+		case 5:
+			squelette.stun = 2;
+			break;
+		case 6:
+			orc.stun = 2;
+			break;
+		case 7:
+			troll.stun = 2;
+			break;
+		case 8:
+			gobelin.stun = 2;
+			break;
+		case 9:
+			elfe_noir.stun = 2;
+			break;
+		case 10:
+			golem.stun = 2;
+			break;
+		case 11:
+			araignee_geante.stun = 2;
+			break;
+		case 12:
+			licorne.stun = 2;
+			break;
+		case 13:
+			geant.stun = 2;
+			break;
+		case 14:
+			sorcier.stun = 2;
+			break;
+		case 15:
+			chien_loup.stun = 2;
+			break;
+		case 16:
+			serpent_geant.stun = 2;
 			break;
 	}
 }
@@ -926,7 +1401,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = paladin.atk;
     				display(6,hero,monstre);
-    				hit_monster(monstre);
+    				hit_monster(monstre,hero);
     				return 1;
     				break;
     			case 2:
@@ -959,7 +1434,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = archer.atk;
     				display(6,hero,monstre);
-    				hit_monster(monstre);
+    				hit_monster(monstre,hero);
     				return 1;
     				break;
     			case 2:
@@ -987,7 +1462,7 @@ int choice_p(int hero, int monstre, int choix) {
     				damage_given = archer.atk * archer.spe2;
     				archer_spe2(monstre);
     				display(13,0,monstre);
-    				hit_monster(monstre);
+    				hit_monster(monstre,hero);
     				mp -= 5;
     				return 1;
     				break;
@@ -1001,7 +1476,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = mage.atk;
     				display(6,hero,monstre);
-    				hit_monster(monstre);
+    				hit_monster(monstre,hero);
     				return 1;
     				break;
     			case 2:
@@ -1041,7 +1516,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = barbare.atk;
     				display(6,hero,monstre);
-    				hit_monster(monstre);
+    				hit_monster(monstre,hero);
     				return 1;
     				break;
     			case 2:
@@ -1055,7 +1530,7 @@ int choice_p(int hero, int monstre, int choix) {
     				monstre = monster_designated();
     				damage_given = barbare.atk * barbare.spe1;
     				display(18,0,monstre);
-    				hit_monster(monstre);
+    				hit_monster(monstre,hero);
     				mp -= 3;
     				return 1;
     				break;
@@ -1065,7 +1540,7 @@ int choice_p(int hero, int monstre, int choix) {
     				mp -= 6;
     				damage_given = barbare.atk * barbare.spe2;
     				display(19,0,monstre);
-    				hit_monster(monstre);
+    				hit_monster(monstre,hero);
     				chance = random_nbr(1,3);
     				if (chance == 1){
     					barbare.pv -= barbare.atk;
@@ -1089,6 +1564,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = minotaure.atk;
                 hit_hero(0);
                 return 1;
@@ -1113,6 +1589,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+                display(32,1,monstre);  
                 damage_taken = goule.atk;
                 hit_hero(0);
                 return 1;
@@ -1126,13 +1603,14 @@ int choice_m(monstre,choix) {
                 //attaque spé
             	display(34,0,0);
             	goule.mp -= 3;
-                return 1000
+                return 1000;
                 break;
         }
     case 3:
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = zombie.atk;
                 hit_hero(0);
                 return 1;
@@ -1171,6 +1649,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = vampire.atk;
                 hit_hero(0);
                 return 1;
@@ -1196,7 +1675,8 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
-                damage_taken = squellette.atk;
+            	display(32,1,monstre);
+                damage_taken = squelette.atk;
                 hit_hero(0);
                 return 1;
                 break;
@@ -1206,11 +1686,18 @@ int choice_m(monstre,choix) {
                 display(32,0,monstre);
                 return 4;
                 break;
+            case 3:
+                //attaque spé
+            	display(34,0,1);
+            	squelette.mp -= 3;
+                return 1000;
+                break;
         }
     case 6:
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = orc.atk;
                 hit_hero(0);
                 return 1;
@@ -1234,6 +1721,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = troll.atk;
                 hit_hero(0);
                 return 1;
@@ -1257,7 +1745,8 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
-                damage_taken = goblin.atk;
+            	display(32,1,monstre);
+                damage_taken = gobelin.atk;
                 hit_hero(0);
                 return 1;
                 break;
@@ -1271,13 +1760,14 @@ int choice_m(monstre,choix) {
                 //attaque spé
             	display(39,0,0);
             	gobelin.mp -= 3;
-                return 1000
+                return 1000;
                 break;
         }
     case 9:
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = elfe_noir.atk;
                 hit_hero(0);
                 return 1;
@@ -1301,6 +1791,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = golem.atk;
                 hit_hero(0);
                 return 1;
@@ -1338,6 +1829,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = araignee_geante.atk;
                 hit_hero(0);
                 return 1;
@@ -1362,6 +1854,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = licorne.atk;
                 hit_hero(0);
                 return 1;
@@ -1376,13 +1869,14 @@ int choice_m(monstre,choix) {
                 //attaque spé
             	display(43,0,0);
             	licorne.mp -= 3;
-                return 1000
+                return 1000;
                 break;
         }
         case 13:
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = geant.atk;
                 hit_hero(0);
                 return 1;
@@ -1404,6 +1898,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = sorcier.atk;
                 hit_hero(0);
                 return 1;
@@ -1475,6 +1970,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = chien_loup.atk;
                 hit_hero(0);
                 return 1;
@@ -1496,6 +1992,7 @@ int choice_m(monstre,choix) {
         switch(choix){
             case 1:
                 //attaques
+            	display(32,1,monstre);
                 damage_taken = serpent_geant.atk;
                 hit_hero(0);
                 return 1;
@@ -1529,7 +2026,6 @@ int choice_m(monstre,choix) {
         }
 	}
 }
-
 //attribution de mana en fin de tour
 int cumul(){
 	int cumul = 0;
@@ -1554,12 +2050,6 @@ int choose(){
 	int monstre = 0;
 	int choix = 0;
     int test = 0;
-    int hero_disponibles[4];
-    hero_disponibles[0] = 1;
-    hero_disponibles[1] = 1;
-    hero_disponibles[2] = 1;
-    hero_disponibles[3] = 1;
-
     //Choix hero
     if (paladin.pv == 0){
     	hero_disponibles[0] = 0;
@@ -1577,10 +2067,45 @@ int choose(){
         display(22,0,0);
         scanf("%d",&hero);
         if (hero_disponibles[hero - 1] == 1){
-            hero_disponibles[hero - 1] = 0;
-            test = 1;
+            switch(hero){
+            	case 1:
+            		if ((paladin.stun != 0)||(paladin.pv <= 0)){
+            			display(48,hero,0);
+            		}else{
+            			hero_disponibles[0] = 0;
+            			test = 1;
+            		}
+            		break;
+            	case 2:
+            		if ((archer.stun != 0)||(archer.pv <= 0)){
+            			display(48,hero,0);
+            		}else{
+            			hero_disponibles[1] = 0;
+            			test = 1;
+            		}
+            		break;
+            	case 3:
+            		if ((mage.stun != 0)||(mage.pv <= 0)){
+            			display(48,hero,0);
+            		}else{
+            			hero_disponibles[2] = 0;
+            			test = 1;
+            		}
+            		break;
+            	case 4:
+            		if ((barbare.stun != 0)||(barbare.pv <= 0)){
+            			display(48,hero,0);
+            		}else{
+            			hero_disponibles[3] = 0;
+            			test = 1;
+            		}
+            		break;
+            }
         }else{
-        	printf("Choix impossible\n");
+        	display(52,hero,0);
+        }
+        if (cumul() == 0){
+        	break;
         }
     }
     //Choix action
@@ -1679,8 +2204,9 @@ int choose(){
             break;
     }
 }
-
 choose_m(monster){
+	int choix = 0;
+	int test = 0;
 	switch(monster){
 		case 1:
 			test = 0;
@@ -1732,7 +2258,12 @@ choose_m(monster){
 			break;
 		case 5:
 			test = 0;
-			choix = random_nbr(1,2);
+			choix = random_nbr(1,3);
+			if (squelette.mp >= 3){
+					test = 1;
+				}else if ((choix == 1) || (choix == 2)){
+					test = 1;
+				}
 			squelette.defense = choice_m(monster,choix);
 			break;
 		case 6:
@@ -1869,67 +2400,283 @@ choose_m(monster){
 			break;
 	}
 }
+int monstre_mp(monstre){
+	switch (monstre){
+		case 1:
+			minotaure.mp += 2;
+			break;
+		case 2:
+			goule.mp += 2;
+			break;
+		case 3:
+			zombie.mp += 2;
+			break;
+		case 4:
+			vampire.mp += 2;
+			break;
+		case 5:
+			squelette.mp += 2;
+			break;
+		case 6:
+			orc.mp += 2;
+			break;
+		case 7:
+			troll.mp += 2;
+			break;
+		case 8:
+			gobelin.mp += 2;
+			break;
+		case 9:
+			elfe_noir.mp += 2;
+			break;
+		case 10:
+			golem.mp += 2;
+			break;
+		case 11:
+			araignee_geante.mp += 2;
+			break;
+		case 12:
+			licorne.mp += 2;
+			break;
+		case 13:
+			geant.mp += 2;
+			break;
+		case 14:
+			sorcier.mp += 2;
+			break;
+		case 15:
+			chien_loup.mp += 2;
+			break;
+		case 16:
+			serpent_geant.mp += 2;
+			break;
+	}
+}
+int poison(){
+	//heros
+	if (paladin.poison != 0){
+		paladin.pv -= paladin.poison;
+	}
+	if (archer.poison != 0){
+		archer.pv -= archer.poison;
+	}
+	if (mage.poison != 0){
+		mage.pv -= mage.poison;
+	}
+	if (barbare.poison != 0){
+		barbare.pv -= barbare.poison;
+	}
+	//stun
+	if (paladin.stun != 0){
+		paladin.stun--;
+	}
+	if (archer.stun != 0){
+		archer.stun--;
+	}
+	if (mage.stun != 0){
+		mage.stun--;
+	}
+	if (barbare.stun != 0){
+		barbare.stun--;
+	}
+	//monstres
+	if (minotaure.poison != 0){
+		minotaure.pv -= minotaure.poison;
+	}
+	if (goule.poison != 0){
+		goule.pv -= goule.poison;
+	}
+	if (zombie.poison != 0){
+		zombie.pv -= zombie.poison;
+	}
+	if (vampire.poison != 0){
+		vampire.pv -= vampire.poison;
+	}
+	if (squelette.poison != 0){
+		squelette.pv -= squelette.poison;
+	}
+	if (orc.poison != 0){
+		orc.pv -= orc.poison;
+	}
+	if (troll.poison != 0){
+		troll.pv -= troll.poison;
+	}
+	if (gobelin.poison != 0){
+		gobelin.pv -= gobelin.poison;
+	}
+	if (elfe_noir.poison != 0){
+		elfe_noir.pv -= elfe_noir.poison;
+	}
+	if (golem.poison != 0){
+		golem.pv -= golem.poison;
+	}
+	if (araignee_geante.poison != 0){
+		araignee_geante.pv -= araignee_geante.poison;
+	}
+	if (licorne.poison != 0){
+		licorne.pv -= licorne.poison;
+	}
+	if (geant.poison != 0){
+		geant.pv -= geant.poison;
+	}
+	if (sorcier.poison != 0){
+		sorcier.pv -= sorcier.poison;
+	}
+	if (chien_loup.poison != 0){
+		chien_loup.pv -= chien_loup.poison;
+	}
+	if (serpent_geant.poison != 0){
+		serpent_geant.pv -= serpent_geant.poison;
+	}
+	//stun
+	if (minotaure.stun != 0){
+		minotaure.stun--;
+	}
+	if (goule.stun != 0){
+		goule.stun--;
+	}
+	if (zombie.stun != 0){
+		zombie.stun--;
+	}
+	if (vampire.stun != 0){
+		vampire.stun--;
+	}
+	if (squelette.stun != 0){
+		squelette.stun--;
+	}
+	if (orc.stun != 0){
+		orc.stun--;
+	}
+	if (troll.stun != 0){
+		troll.stun--;
+	}
+	if (gobelin.stun != 0){
+		gobelin.stun--;
+	}
+	if (elfe_noir.stun != 0){
+		elfe_noir.stun--;
+	}
+	if (golem.stun != 0){
+		golem.stun--;
+	}
+	if (araignee_geante.stun != 0){
+		araignee_geante.stun--;
+	}
+	if (licorne.stun != 0){
+		licorne.stun--;
+	}
+	if (geant.stun != 0){
+		geant.stun--;
+	}
+	if (sorcier.stun != 0){
+		sorcier.stun--;
+	}
+	if (chien_loup.stun != 0){
+		chien_loup.stun--;
+	}
+	if (serpent_geant.stun != 0){
+		serpent_geant.stun--;
+	}
+}
+
+int cumul_m(){
+	int cumul = 0;
+	if (monstre1 != 0){
+		cumul++;
+	}
+	if (monstre2 != 0){
+		cumul++;
+	}
+	if (monstre3 != 0){
+		cumul++;
+	}
+	return cumul;
+}
+
 //chaque tour
 int tour(manche){
 	//cycles de combats différents en fonction du nombre de monstre (précedement défini par le nombre de manches passées)
     if (manche <= 5){
-    	//2 d'affil
     	choose();
+    	choose_m(monstre1);
     	choose();
-    	//riposte
-    	choose_m(monster1);
     }else if (manche <= 9){
     	//hero
     	choose();
     	//monstre
-    	choose_m(monster2);
+    	choose_m(monstre1);
     	//hero
     	choose();
     	//monstre
-    	choose_m(monster3);
+    	choose_m(monstre2);
     }else{
     	//hero
     	choose();
     	//monstre
-    	choose_m(monster1);
+    	choose_m(monstre1);
     	//hero
     	choose();
     	//monstre
-    	choose_m(monster2);
+    	choose_m(monstre2);
     	//monstre
-    	choose_m(monster3);
+    	choose_m(monstre3);
     }
     //application des effets (poison + countdown)
+    poison();
+    hero_disponibles[0] = 1;
+    hero_disponibles[1] = 1;
+    hero_disponibles[2] = 1;
+    hero_disponibles[3] = 1;
 }
 
 int main() {
 	srand(time(NULL));
 	int test = 1;
+	int test_m = 1;
 	int tours = 0;
+	hero_disponibles[0] = 1;
+    hero_disponibles[1] = 1;
+    hero_disponibles[2] = 1;
+    hero_disponibles[3] = 1;
     //boucle des manches
 
     for (int manche = 1; manche < 11; manche++){
  		//debut manche
+ 		display(51,manche,0);
  		test = 1;
+ 		test_m = 1;
     	select_monstre(manche);
     	tours = 0;
-    	heros paladin = {150,150,30,0,0,30,0.2};
-    	heros archer = {80,80,30,0,0,3,40};
-    	heros mage = {100,100,30,0,0,10,4};
-    	heros barbare = {120,120,50,0,0,1.5,2};
+    	mp = 0;
+    	paladin.pv = paladin.pv_max;
+    	paladin.poison = 0;
+    	paladin.stun = 0;
+    	archer.pv = archer.pv_max;
+    	archer.poison = 0;
+    	archer.stun = 0;
+    	mage.pv = mage.pv_max;
+    	mage.poison = 0;
+    	mage.stun = 0;
+    	barbare.pv = barbare.pv_max;
+    	barbare.poison = 0;
+    	barbare.stun = 0;
 
     	//boucle des tours
-    	while (test != 0)/*||(Tous les monstres en vie)*/{
-    	tours++;
+    	while ((test != 0)&&(test_m != 0)){
+    		tours++;
     		if (tours < 10){
-    			display(27,5,tours);
+    			display(27,1,tours);
     		}else{
     			display(27,2,tours);
     		}
     		tour(manche);
     	    //compte le nombre de heros en vie et attribue du mana en conséquence
-    	    mana += cumul();
+    	    mp += cumul();
+    	    monstre_mp(monstre1);
+    	    monstre_mp(monstre2);
+    	    monstre_mp(monstre3);
     	    test = cumul();
+    	    test_m = cumul_m();
     	}
     }
   return 0;
