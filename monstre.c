@@ -36,7 +36,7 @@ monster monsterChoice(monster monster1, int niveau){
         monster goule = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster zombie = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster vampire = {200*niveau,200*niveau,30,0,0,30*niveau};
-        monster squellette = {200*niveau,200*niveau,30,0,0,30*niveau};
+        monster squelette = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster orc = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster troll = {200*niveau,200*niveau,30,0,0,30*niveau};
         monster goblin = {200*niveau,200*niveau,30,0,0,30*niveau};
@@ -96,9 +96,9 @@ monster monsterChoice(monster monster1, int niveau){
         break;
 
         case 5: 
-            monster1 = squellette;
+            monster1 = squelette;
             printf("\n");
-            printf("vie:%d \n", squellette.pv);
+            printf("vie:%d \n", squelette.pv);
 
             current_monster5 = 5
         break;
@@ -207,6 +207,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = minotaure.atk;
+                printf("Le minotaure attaque, ce qui inflige %d de degats a tout les heros\n" , minotaure.atk );
                 break;
             case 2:
                 //défense
@@ -215,7 +216,8 @@ switch (monstre){
             case 3:
                 //attaque spé
                 hero= hero_designated();
-                minotaure.atk = minotaure.atk* //hero vivant
+                minotaure.atk = minotaure.atk* ;//nbr de hero vivant
+                printf("Le minotaure attaque %d, ce qui lui inflige %d de degats\n", hero_designated , minotaure.atk*; )// (nbr de heros vivant) 
                 break;
         }
     case 2:
@@ -223,6 +225,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = goule.atk;
+                printf(" La goule attaque, elle inflige %d de degats a tout les heros", goule.atk);
                 break;
             case 2:
                 //défense
@@ -230,6 +233,7 @@ switch (monstre){
                 break;
             case 3:
                 //attaque spé
+                printf("La goule a esquiver, elle ne recoit donc aucun degats\n");
                 return 1000
                 break;
         }
@@ -238,6 +242,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = zombie.atk;
+                printf("Le zombie attaque, il inflige %d de degats a tout les heros", zombie.atk);
                 break;
             case 2:
                 //défense
@@ -253,6 +258,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = vampire.atk;
+                printf(" Le vampire attaque, il inflige %d de degats a tout les heros", vampire.atk);
                 break;
             case 2:
                 //défense
@@ -268,7 +274,8 @@ switch (monstre){
         switch(choix_monstre){
             case 1:
                 //attaques
-                damage_taken = squellette.atk;
+                damage_taken = squelette.atk;
+                printf(" Le squelette attaque, il inflige %d de degats a tout les heros", squelette.atk);
                 break;
             case 2:
                 //défense
@@ -283,6 +290,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = orc.atk;
+                printf(" Le orc attaque, il inflige %d de degats a tout les heros", orc.atk);
                 break;
             case 2:
                 //défense
@@ -298,6 +306,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = troll.atk;
+                printf(" Le troll attaque, il inflige %d de degats a tout les heros", troll.atk);
                 break;
             case 2:
                 //défense
@@ -313,6 +322,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = goblin.atk;
+                printf(" Le goblin attaque, il inflige %d de degats a tout les heros", goblin.atk);
                 break;
             case 2:
                 //défense
@@ -328,6 +338,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = elfe_noir.atk;
+                printf(" L'elfe noir attaque, il inflige %d de degats a tout les heros", elfe_noir.atk);
                 break;
             case 2:
                 //défense
@@ -344,6 +355,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = golem.atk;
+                printf(" Le golem attaque, il inflige %d de degats a tout les heros", golem.atk);
                 break;
             case 2:
                 //défense
@@ -359,6 +371,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = araignee_geante.atk;
+                printf(" L'araignee geante attaque, elle inflige %d de degats a tout les heros", araignee_geante.atk);
                 break;
             case 2:
                 //défense
@@ -374,6 +387,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = licorne.atk;
+                printf(" La licorne attaque, elle inflige %d de degats a tout les heros", licorne.atk);
                 break;
             case 2:
                 //défense
@@ -389,6 +403,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = geant.atk;
+                printf(" Le geant attaque, il inflige %d de degats a tout les heros", geant.atk);
                 break;
             case 2:
                 //défense
@@ -404,6 +419,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = sorcier.atk;
+                printf(" Le sorcier attaque, il inflige %d de degats a tout les heros", sorcier.atk);
                 break;
             case 2:
                 //défense
@@ -420,6 +436,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = chien_loup.atk;
+                printf(" Le chien loup attaque, il inflige %d de degats a tout les heros", chien_loup.atk);
                 break;
             case 2:
                 //défense
@@ -437,6 +454,7 @@ switch (monstre){
             case 1:
                 //attaques
                 damage_taken = serpent_geant.atk;
+                printf(" Le serpent_geant attaque, il inflige %d de degats a tout les heros", serpent_geant.atk);
                 break;
             case 2:
                 //défense
