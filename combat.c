@@ -1,7 +1,6 @@
 /*
 Préface : 
 Le code fonctionne mais n'a été testé que sur un compileur de C en ligne
-Un seul bug trouvé mais inexpliquable qui consiste en des opérations qui ne devraient jamais avoir lieu à ce moment, je n'ai pas trouvé la cause de ce bug mais le compilateur freeze avant que le bug n'apparaisse
 
 On peut affronter plusieurs monstres à la fois, mais pas avant d'avoir passer la 5ème manche puis le niveau 10 final nous permet même d'en affronter 3 en même temps
 l'xp arrive lorsque l'on tue un monstre (plus d'xp pour celui qui l'achève)
