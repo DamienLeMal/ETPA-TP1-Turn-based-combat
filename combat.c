@@ -114,7 +114,7 @@ int random_nbr (int min, int max){
 }
 
 //Choix du monstre selon la progression du joueur
-int select_monstre(manche){
+void select_monstre(int manche){
     int nbr_monstre = 0;
 	int nombre = 0;
 	float niveau = 1;
@@ -276,7 +276,7 @@ int select_monstre(manche){
 }
 
 //affichage generique des stats : visuel de l'avancée du jeu. Quels heros sont encores en vie, barre d'xp...
-int display(int code, int hero, int monstre){
+void display(int code, int hero, int monstre){
     switch (code){
         case 1 :
             //selection des personnages (vie, mp, xp, effets(ex : poison) pour chaque hero)
@@ -288,7 +288,7 @@ int display(int code, int hero, int monstre){
             break;
         case 3 :
             //archer
-            printf("[1] Attaque --- 0 mp \n[2] Defense --- 0 mp \n[3] Esquive --- 1 mp \n[4] Fleche empoisonee --- 10 mp (Probabilite de succes : 50%)\n");
+            printf("[1] Attaque --- 0 mp \n[2] Defense --- 0 mp \n[3] Esquive --- 1 mp \n[4] Fleche empoisonee --- 10 mp (Probabilite de succes : 50%%) \n");
             break;
         case 4 :
             //mage
@@ -296,7 +296,7 @@ int display(int code, int hero, int monstre){
             break;
         case 5 :
             //barbare
-            printf("[1] Attaque --- 0 mp \n[2] Defense --- 0 mp \n[3] Frappe sanglante --- 3 mp \n[4] Rage --- 6 mp (Probabilite de prendre cher : 50%)\n");
+            printf("[1] Attaque --- 0 mp \n[2] Defense --- 0 mp \n[3] Frappe sanglante --- 3 mp \n[4] Rage --- 6 mp (Probabilite de prendre cher : 50%%)\n");
             break;
         case 6 :
         	//attaque
@@ -612,7 +612,7 @@ int display(int code, int hero, int monstre){
         	printf(" ! Il souffre d'une infection !\n");
         	break;
         case 36:
-        	printf("Le Vampire vole %d ");
+        	printf("Le Vampire vole %d ",monstre);
         	display(7,hero,0);
         	printf(" de son sang et regagne %d pv !\n",monstre);
         	break;
@@ -714,7 +714,7 @@ int display(int code, int hero, int monstre){
        		}
        		break;
        	case 51 :
-       		printf("-------- Debut d'une Nouvelle Manche --------\n----------- Manche manche %d / 10 ------------\n");
+       		printf("-------- Debut d'une Nouvelle Manche --------\n----------- Manche manche %d / 10 ------------\n",hero);
        		break;
        	case 52 :
        		printf("Vous avez deja utilise ");
@@ -723,7 +723,7 @@ int display(int code, int hero, int monstre){
        		break;
   	}
 }
-int amelioration(hero){
+void amelioration(int hero){
 	int choix = 0;
 	display(50,hero,0);
     scanf("%d",&choix);
@@ -762,7 +762,7 @@ int amelioration(hero){
         break;
     }
 }
-int xp(hero){
+void xp(int hero){
 	switch(hero){
 		case 1:
 			switch (paladin.xp){
@@ -906,7 +906,7 @@ int xp(hero){
 			break;
     }
 }
-int side_xp(hero){
+void side_xp(int hero){
 	switch (hero){
         	case 1:
         		archer.xp += 2;
@@ -1022,7 +1022,7 @@ int hero_designated(){
 	}
 }
 
-hit_hero(hero){
+void hit_hero(int hero){
 	int oof = 0;
 	int oof2 = 0;
 	int oof3 = 0;
@@ -1065,7 +1065,7 @@ hit_hero(hero){
 		}
 	}
 }
-end_m(mort,monstre){
+void end_m(int mort, int monstre){
 	if (mort == 1){
 		if (monstre1 == monstre){
 			monstre1 = 0;
@@ -1076,7 +1076,7 @@ end_m(mort,monstre){
 		}
 	}
 }
-hit_monster(monstre,hero){
+void hit_monster(int monstre, int hero){
 	int oof = 0;
 	int mort = 0;
 	switch(monstre){
@@ -1097,7 +1097,7 @@ hit_monster(monstre,hero){
         case 3: 
         	oof = damage_given/zombie.defense;
             zombie.pv -= oof;
-            mort = display(29,oof,monstre);
+            display(29,oof,monstre);
             mort = death(zombie.pv,hero);
             end_m(mort,monstre);
         	break;
@@ -1196,7 +1196,7 @@ hit_monster(monstre,hero){
 }
 
 
-int paladin_spe1(){
+void paladin_spe1(){
 	int test = 0;
    	int choix_paladin = 0;
    	while (test == 0){
@@ -1223,7 +1223,7 @@ int paladin_spe1(){
     	}	
     }
 }
-int paladin_spe2(){
+void paladin_spe2(){
 	int test = 0;
    	int choix_paladin = 0;
    	while (test == 0){
@@ -1247,7 +1247,7 @@ int paladin_spe2(){
     	}
     }
 }
-int archer_spe2(monstre){
+void archer_spe2(int monstre){
 	switch (monstre){
         case 1:
             minotaure.poison = 1;
@@ -1299,7 +1299,7 @@ int archer_spe2(monstre){
             break;
     }
 }
-int mage_spe1(){
+void mage_spe1(){
 	int test = 0;
 	int choix_mage = 0;
 	display(14,0,0);
@@ -1334,7 +1334,7 @@ int mage_spe1(){
 	}
 	display(15,choix_mage,0);
 }
-int mage_spe2(monstre){
+void mage_spe2(int monstre){
 	switch (monstre){
 		case 1:
 			minotaure.stun = 2;
@@ -1387,6 +1387,22 @@ int mage_spe2(monstre){
 	}
 }
 
+int cumul(){
+	int cumul = 0;
+	if (paladin.pv > 0){
+		cumul++;
+	}
+	if (archer.pv > 0){
+		cumul++;
+	}
+	if (mage.pv > 0){
+		cumul++;
+	}
+	if (barbare.pv > 0){
+		cumul++;
+	}
+	return cumul;
+}
 
 //determine les actions a effectuer en fonction des choix du joueur
 int choice_p(int hero, int monstre, int choix) {
@@ -1557,7 +1573,7 @@ int choice_p(int hero, int monstre, int choix) {
 }
 
 //Applique le choix des monstres la valeur de retour nous indique par combien on divise l'attaque reçue, lors de la défense c'est 4 sinon c'est 1 pour ne pas changer la valeur de l'attaque
-int choice_m(monstre,choix) {
+int choice_m(int monstre, int choix) {
 	int hero = 0;
 	switch (monstre){
     case 1:
@@ -2026,26 +2042,9 @@ int choice_m(monstre,choix) {
         }
 	}
 }
-//attribution de mana en fin de tour
-int cumul(){
-	int cumul = 0;
-	if (paladin.pv > 0){
-		cumul++;
-	}
-	if (archer.pv > 0){
-		cumul++;
-	}
-	if (mage.pv > 0){
-		cumul++;
-	}
-	if (barbare.pv > 0){
-		cumul++;
-	}
-	return cumul;
-}
 
 //Choix d'un hero et de son action
-int choose(){
+void choose(){
 	int hero = 0;
 	int monstre = 0;
 	int choix = 0;
@@ -2204,7 +2203,7 @@ int choose(){
             break;
     }
 }
-choose_m(monster){
+void choose_m(int monster){
 	int choix = 0;
 	int test = 0;
 	switch(monster){
@@ -2400,7 +2399,7 @@ choose_m(monster){
 			break;
 	}
 }
-int monstre_mp(monstre){
+void monstre_mp(int monstre){
 	switch (monstre){
 		case 1:
 			minotaure.mp += 2;
@@ -2452,7 +2451,7 @@ int monstre_mp(monstre){
 			break;
 	}
 }
-int poison(){
+void poison(){
 	//heros
 	if (paladin.poison != 0){
 		paladin.pv -= paladin.poison;
@@ -2594,7 +2593,7 @@ int cumul_m(){
 }
 
 //chaque tour
-int tour(manche){
+void tour(int manche){
 	//cycles de combats différents en fonction du nombre de monstre (précedement défini par le nombre de manches passées)
     if (manche <= 5){
     	choose();
